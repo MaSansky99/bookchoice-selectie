@@ -1,1 +1,363 @@
-<!DOCTYPE html><html <!DOCTYPE html><html><head><meta charset="UTF-8"><title>Bookchoice</title>title></head><body><h1>Bookchoice Selectie</h1><p>Laden...</p></body></html></p></body></head></html>lang="nl"><head><meta charset="UTF-8"><title>Bookchoice</title></head><body><h1>Test</h1></body></html>html></h1></body></title></head>
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookchoice Selectie - Januari 2026</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .book {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .book-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .book-checkbox {
+            width: 24px;
+            height: 24px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+        .book-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0;
+        }
+        .book-author {
+            color: #7f8c8d;
+            margin: 5px 0;
+        }
+        .rating {
+            background: #f39c12;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .rating-count {
+            color: #95a5a6;
+            font-size: 0.9em;
+            margin-left: 8px;
+        }
+        .genre {
+            background: #3498db;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .series-warning {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .series-ok {
+            background: #27ae60;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .summary {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+        .reviews {
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+        .review {
+            background: #fafafa;
+            padding: 12px;
+            border-left: 3px solid #3498db;
+            margin: 10px 0;
+            font-style: italic;
+            font-size: 0.95em;
+        }
+        .submit-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-top: 30px;
+        }
+        .submit-btn:hover {
+            background: #219a52;
+        }
+        .selected-count {
+            text-align: center;
+            font-size: 1.1em;
+            color: #7f8c8d;
+            margin: 20px 0;
+        }
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .book { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <h1>📚 Bookchoice Januari 2026</h1>
+    <p>Selecteer de boeken die je wilt downloaden en klik op verzenden.</p>
+    
+    <form id="bookForm">
+        <!-- Book 1 -->
+        <div class="book">
+            <div class="book-header">
+                <input type="checkbox" class="book-checkbox" name="book" value="1" id="book1">
+                <div>
+                    <label for="book1" class="book-title">1. Moederheil</label>
+                    <p class="book-author">Els Florijn</p>
+                    <span class="rating">⭐ 4.40</span>
+                    <span class="rating-count">(5 reviews)</span>
+                </div>
+            </div>
+            <span class="genre">📖 Literaire fictie</span>
+            <div class="series-ok">✓ Standalone - geen serie</div>
+            <div class="summary">
+                <strong>Samenvatting:</strong> Een aangrijpend verhaal over moederschap, verlies en de zoektocht naar identiteit in naoorlogs Nederland.
+            </div>
+            <div class="reviews">
+                <strong>Populaire reviews:</strong>
+                <div class="review">"Prachtig geschreven, je wordt helemaal meegezogen in het verhaal."</div>
+            </div>
+        </div>
+
+        <!-- Book 2 -->
+        <div class="book">
+            <div class="book-header">
+                <input type="checkbox" class="book-checkbox" name="book" value="2" id="book2">
+                <div>
+                    <label for="book2" class="book-title">2. Het kuuroord</label>
+                    <p class="book-author">Ruth Kelly</p>
+                    <span class="rating">⭐ 3.48</span>
+                    <span class="rating-count">(98 reviews)</span>
+                </div>
+            </div>
+            <span class="genre">🔪 Thriller</span>
+            <div class="series-ok">✓ Standalone - geen serie</div>
+            <div class="summary">
+                <strong>Samenvatting:</strong> Een exclusief wellness resort wordt het toneel van gruwelijke gebeurtenissen wanneer gasten één voor één verdwijnen.
+            </div>
+            <div class="reviews">
+                <strong>Populaire reviews:</strong>
+                <div class="review">"Spannend van begin tot eind, al is de ontknoping wat voorspelbaar."</div>
+            </div>
+        </div>
+
+        <!-- Book 3 -->
+        <div class="book">
+            <div class="book-header">
+                <input type="checkbox" class="book-checkbox" name="book" value="3" id="book3">
+                <div>
+                    <label for="book3" class="book-title">3. As in de sneeuw</label>
+                    <p class="book-author">Oriana Ramunno</p>
+                    <span class="rating">⭐ 4.12</span>
+                    <span class="rating-count">(1.670 reviews)</span>
+                </div>
+            </div>
+            <span class="genre">📖 Literaire fictie / Historisch</span>
+            <div class="series-ok">✓ Standalone - geen serie</div>
+            <div class="summary">
+                <strong>Samenvatting:</strong> Een ontroerend verhaal over familie, oorlog en de kracht van herinneringen, gesitueerd in Italië.
+            </div>
+            <div class="reviews">
+                <strong>Populaire reviews:</strong>
+                <div class="review">"Emotioneel en prachtig geschreven. De personages blijven je bij."</div>
+            </div>
+        </div>
+
+        <!-- Book 4 -->
+        <div class="book">
+            <div class="book-header">
+                <input type="checkbox" class="book-checkbox" name="book" value="4" id="book4">
+                <div>
+                    <label for="book4" class="book-title">4. De geluksbrenger</label>
+                    <p class="book-author">Pierre Jarawan</p>
+                    <span class="rating">⭐ 3.90</span>
+                    <span class="rating-count">(145 reviews)</span>
+                </div>
+            </div>
+            <span class="genre">📖 Literaire fictie</span>
+            <div class="series-ok">✓ Standalone - geen serie</div>
+            <div class="summary">
+                <strong>Samenvatting:</strong> Een meeslepend verhaal over identiteit, roots en de zoektocht naar geluk tussen twee culturen.
+            </div>
+            <div class="reviews">
+                <strong>Populaire reviews:</strong>
+                <div class="review">"Jarawan schrijft zo beeldend dat je je in het Midden-Oosten waant."</div>
+            </div>
+        </div>
+
+        <!-- Book 5 -->
+        <div class="book">
+            <div class="book-header">
+                <input type="checkbox" class="book-checkbox" name="book" value="5" id="book5">
+                <div>
+                    <label for="book5" class="book-title">5. Rustimo</label>
+                    <p class="book-author">Lucas Zandberg</p>
+                    <span class="rating">⭐ 3.68</span>
+                    <span class="rating-count">(19 reviews)</span>
+                </div>
+            </div>
+            <span class="genre">📖 Literaire fictie</span>
+            <div class="series-ok">✓ Standalone - geen serie</div>
+            <div class="summary">
+                <strong>Samenvatting:</strong> Een bijzonder debuut over een jonge man die zijn plek zoekt in de wereld en worstelt met verwachtingen.
+            </div>
+            <div class="reviews">
+                <strong>Populaire reviews:</strong>
+                <div class="review">"Verrassend en origineel. Een schrijver om in de gaten te houden."</div>
+            </div>
+        </div>
+
+        <!-- Book 6 -->
+        <div class="book">
+            <div class="book-header">
+                <input type="checkbox" class="book-checkbox" name="book" value="6" id="book6">
+                <div>
+                    <label for="book6" class="book-title">6. Mijn naam is Edino</label>
+                    <p class="book-author">Edino van Dorsten</p>
+                    <span class="rating">⭐ 4.45</span>
+                    <span class="rating-count">(138 reviews)</span>
+                </div>
+            </div>
+            <span class="genre">📘 Non-fictie / Autobiografie</span>
+            <div class="series-ok">✓ Standalone - geen serie</div>
+            <div class="summary">
+                <strong>Samenvatting:</strong> Het indrukwekkende levensverhaal van Edino, van straatarm kind tot succesvolle ondernemer.
+            </div>
+            <div class="reviews">
+                <strong>Populaire reviews:</strong>
+                <div class="review">"Inspirerend en ontroerend. Laat zien dat je alles kunt bereiken."</div>
+            </div>
+        </div>
+
+        <!-- Book 7 -->
+        <div class="book">
+            <div class="book-header">
+                <input type="checkbox" class="book-checkbox" name="book" value="7" id="book7">
+                <div>
+                    <label for="book7" class="book-title">7. Flora's erfenis</label>
+                    <p class="book-author">Clarisse Sabard</p>
+                    <span class="rating">⭐ 4.31</span>
+                    <span class="rating-count">(286 reviews)</span>
+                </div>
+            </div>
+            <span class="genre">💕 Romantiek / Feel-good</span>
+            <div class="series-ok">✓ Standalone - geen serie</div>
+            <div class="summary">
+                <strong>Samenvatting:</strong> Een hartverwarmend verhaal over een jonge vrouw die een bakkerij erft en familiegeheimen ontdekt.
+            </div>
+            <div class="reviews">
+                <strong>Populaire reviews:</strong>
+                <div class="review">"Heerlijk feelgood boek, perfect voor een regenachtige zondag."</div>
+            </div>
+        </div>
+
+        <!-- Book 8 -->
+        <div class="book">
+            <div class="book-header">
+                <input type="checkbox" class="book-checkbox" name="book" value="8" id="book8">
+                <div>
+                    <label for="book8" class="book-title">8. Slaap zacht</label>
+                    <p class="book-author">B.A. Paris</p>
+                    <span class="rating">⭐ 3.72</span>
+                    <span class="rating-count">(1.202 reviews)</span>
+                </div>
+            </div>
+            <span class="genre">🔪 Thriller</span>
+            <div class="series-ok">✓ Standalone - geen serie</div>
+            <div class="summary">
+                <strong>Samenvatting:</strong> Een psychologische thriller over een vrouw die ontdekt dat haar perfecte leven gebouwd is op leugens.
+            </div>
+            <div class="reviews">
+                <strong>Populaire reviews:</strong>
+                <div class="review">"Typisch B.A. Paris - je blijft doorlezen tot de laatste pagina."</div>
+            </div>
+        </div>
+
+        <p class="selected-count">Geselecteerd: <span id="count">0</span> boeken</p>
+        <button type="submit" class="submit-btn">📥 Verstuur selectie</button>
+    </form>
+
+    <script>
+        const WEBHOOK_URL = 'WEBHOOK_PLACEHOLDER';
+        
+        // Update counter
+        document.querySelectorAll('.book-checkbox').forEach(cb => {
+            cb.addEventListener('change', () => {
+                const count = document.querySelectorAll('.book-checkbox:checked').length;
+                document.getElementById('count').textContent = count;
+            });
+        });
+
+        // Form submission
+        document.getElementById('bookForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const selected = [...document.querySelectorAll('.book-checkbox:checked')].map(cb => cb.value);
+            
+            if (selected.length === 0) {
+                alert('Selecteer minimaal één boek!');
+                return;
+            }
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        month: 'januari-2026',
+                        selected_books: selected
+                    })
+                });
+                
+                if (response.ok) {
+                    document.body.innerHTML = '<div style="text-align:center;padding:50px;"><h1>✅ Selectie verzonden!</h1><p>Je gekozen boeken worden gedownload naar je Google Drive.</p></div>';
+                } else {
+                    alert('Er ging iets mis. Probeer het opnieuw.');
+                }
+            } catch (err) {
+                alert('Kon geen verbinding maken. Probeer het later opnieuw.');
+            }
+        });
+    </script>
+</body>
+</html>
