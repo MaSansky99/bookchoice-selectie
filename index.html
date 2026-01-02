@@ -340,20 +340,18 @@
             }
 
             try {
-                const response = await fetch(WEBHOOK_URL, {
+                await fetch(WEBHOOK_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
                     body: JSON.stringify({
                         month: 'januari-2026',
                         selected_books: selected
                     })
                 });
                 
-                if (response.ok) {
-                    document.body.innerHTML = '<div style="text-align:center;padding:50px;"><h1>✅ Selectie verzonden!</h1><p>Je gekozen boeken worden gedownload naar je Google Drive.</p></div>';
-                } else {
-                    alert('Er ging iets mis. Probeer het opnieuw.');
-                }
+                // With no-cors mode, we assume success
+                document.body.innerHTML = '<div style="text-align:center;padding:50px;font-family:system-ui;"><h1>✅ Selectie verzonden!</h1><p>Je gekozen boeken worden gedownload naar je Google Drive.</p></div>';
             } catch (err) {
                 alert('Kon geen verbinding maken. Probeer het later opnieuw.');
             }
