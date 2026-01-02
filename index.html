@@ -5,357 +5,439 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookchoice Selectie - Januari 2026</title>
     <style>
-        * { box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #f8f9fa;
-            color: #333;
-        }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-        }
-        .book {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .book-header {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        .book-checkbox {
-            width: 24px;
-            height: 24px;
-            margin-top: 5px;
-            cursor: pointer;
-        }
-        .book-title {
-            font-size: 1.4em;
-            font-weight: bold;
-            color: #2c3e50;
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
         }
-        .book-author {
-            color: #7f8c8d;
-            margin: 5px 0;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            gap: 20px;
+        }
+        @media (max-width: 550px) {
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .book-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        .book-cover {
+            flex-shrink: 0;
+        }
+        .book-cover img {
+            width: 150px;
+            height: 225px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .book-info {
+            flex: 1;
+        }
+        .book-info h2 {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .author {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 10px;
         }
         .rating {
-            background: #f39c12;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+        .stars {
+            color: #f5a623;
+            font-size: 1.2em;
+        }
+        .score {
             font-weight: bold;
-            display: inline-block;
+            color: #333;
+            margin-left: 5px;
         }
-        .rating-count {
-            color: #95a5a6;
+        .count {
+            color: #888;
             font-size: 0.9em;
-            margin-left: 8px;
         }
-        .genre {
-            background: #3498db;
+        .genre-tag {
+            display: inline-block;
+            background: #667eea;
             color: white;
             padding: 4px 12px;
-            border-radius: 15px;
+            border-radius: 20px;
             font-size: 0.85em;
+            margin-right: 8px;
+            margin-bottom: 10px;
+        }
+        .series-badge, .standalone-badge {
             display: inline-block;
-            margin: 10px 0;
-        }
-        .series-warning {
-            background: #e74c3c;
+            background: #48bb78;
             color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-size: 0.9em;
-        }
-        .series-ok {
-            background: #27ae60;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-size: 0.9em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 10px;
         }
         .summary {
-            background: #ecf0f1;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            line-height: 1.6;
-        }
-        .reviews {
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-            margin-top: 15px;
-        }
-        .review {
-            background: #fafafa;
-            padding: 12px;
-            border-left: 3px solid #3498db;
-            margin: 10px 0;
-            font-style: italic;
+            color: #555;
             font-size: 0.95em;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        .goodreads-link {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9em;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .goodreads-link:hover {
+            text-decoration: underline;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1em;
+            color: #333;
+            gap: 10px;
+        }
+        .checkbox-container input {
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+        }
+        .footer {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: sticky;
+            bottom: 20px;
+        }
+        .counter {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #333;
         }
         .submit-btn {
-            background: #27ae60;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
             padding: 15px 40px;
             font-size: 1.2em;
-            border-radius: 8px;
+            border-radius: 30px;
             cursor: pointer;
-            display: block;
-            width: 100%;
-            margin-top: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .submit-btn:hover {
-            background: #219a52;
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.5);
         }
-        .selected-count {
-            text-align: center;
-            font-size: 1.1em;
-            color: #7f8c8d;
-            margin: 20px 0;
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
         }
-        @media (max-width: 600px) {
-            body { padding: 10px; }
-            .book { padding: 15px; }
+        input[type="hidden"] {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <h1>📚 Bookchoice Januari 2026</h1>
-    <p>Selecteer de boeken die je wilt downloaden en klik op verzenden.</p>
+    <div class="container">
+        <header>
+            <h1>📚 Bookchoice Selectie</h1>
+            <p>Januari 2026 - Selecteer je favoriete ebooks</p>
+        </header>
+        
+        <input type="hidden" id="month" value="januari-2026">
+        
+        <div class="books-grid">
+            
+    <div class="book-card">
+        <div class="book-cover">
+            <img src="https://media.bookchoice.com/images/b8ad8c98-daa7-4caf-80e7-9f4d26aec81f.jpg?w=300" alt="Moederheil" onerror="this.src='https://via.placeholder.com/150x225?text=No+Cover'">
+        </div>
+        <div class="book-info">
+            <h2>Moederheil</h2>
+            <p class="author">Els Florijn</p>
+            <div class="rating">
+                <span class="stars">★★★★☆</span>
+                <span class="score">4.19</span>
+                <span class="count">(26 beoordelingen)</span>
+            </div>
+            <span class="genre-tag">Roman</span>
+            <span class="standalone-badge">✓ Standalone</span>
+            <p class="summary">Een meeslepend verhaal over moederschap, geheimen en familierelaties.</p>
+            <a href="https://www.goodreads.com/book/show/22054755-moederheil" target="_blank" class="goodreads-link">Bekijk op Goodreads →</a>
+            <label class="checkbox-container">
+                <input type="checkbox" name="book" value="moederheil">
+                <span class="checkmark"></span>
+                Selecteer dit boek
+            </label>
+        </div>
+    </div>
     
-    <form id="bookForm">
-        <!-- Book 1 -->
-        <div class="book">
-            <div class="book-header">
-                <input type="checkbox" class="book-checkbox" name="book" value="1" id="book1">
-                <div>
-                    <label for="book1" class="book-title">1. Moederheil</label>
-                    <p class="book-author">Els Florijn</p>
-                    <span class="rating">⭐ 4.40</span>
-                    <span class="rating-count">(5 reviews)</span>
-                </div>
-            </div>
-            <span class="genre">📖 Literaire fictie</span>
-            <div class="series-ok">✓ Standalone - geen serie</div>
-            <div class="summary">
-                <strong>Samenvatting:</strong> Een aangrijpend verhaal over moederschap, verlies en de zoektocht naar identiteit in naoorlogs Nederland.
-            </div>
-            <div class="reviews">
-                <strong>Populaire reviews:</strong>
-                <div class="review">"Prachtig geschreven, je wordt helemaal meegezogen in het verhaal."</div>
-            </div>
+    <div class="book-card">
+        <div class="book-cover">
+            <img src="https://media.bookchoice.com/images/af34f45e-f5c9-4dc7-8dd7-4c56d0b0a3bb.jpg?w=300" alt="Het kuuroord" onerror="this.src='https://via.placeholder.com/150x225?text=No+Cover'">
         </div>
-
-        <!-- Book 2 -->
-        <div class="book">
-            <div class="book-header">
-                <input type="checkbox" class="book-checkbox" name="book" value="2" id="book2">
-                <div>
-                    <label for="book2" class="book-title">2. Het kuuroord</label>
-                    <p class="book-author">Ruth Kelly</p>
-                    <span class="rating">⭐ 3.48</span>
-                    <span class="rating-count">(98 reviews)</span>
-                </div>
+        <div class="book-info">
+            <h2>Het kuuroord</h2>
+            <p class="author">Ruth Kelly</p>
+            <div class="rating">
+                <span class="stars">★★★½☆</span>
+                <span class="score">3.57</span>
+                <span class="count">(7 beoordelingen)</span>
             </div>
-            <span class="genre">🔪 Thriller</span>
-            <div class="series-ok">✓ Standalone - geen serie</div>
-            <div class="summary">
-                <strong>Samenvatting:</strong> Een exclusief wellness resort wordt het toneel van gruwelijke gebeurtenissen wanneer gasten één voor één verdwijnen.
-            </div>
-            <div class="reviews">
-                <strong>Populaire reviews:</strong>
-                <div class="review">"Spannend van begin tot eind, al is de ontknoping wat voorspelbaar."</div>
-            </div>
+            <span class="genre-tag">Thriller</span>
+            <span class="standalone-badge">✓ Standalone</span>
+            <p class="summary">Een spannende thriller over een luxueus kuuroord met duistere geheimen.</p>
+            <a href="https://www.goodreads.com/book/show/212050706-het-kuuroord" target="_blank" class="goodreads-link">Bekijk op Goodreads →</a>
+            <label class="checkbox-container">
+                <input type="checkbox" name="book" value="het-kuuroord">
+                <span class="checkmark"></span>
+                Selecteer dit boek
+            </label>
         </div>
-
-        <!-- Book 3 -->
-        <div class="book">
-            <div class="book-header">
-                <input type="checkbox" class="book-checkbox" name="book" value="3" id="book3">
-                <div>
-                    <label for="book3" class="book-title">3. As in de sneeuw</label>
-                    <p class="book-author">Oriana Ramunno</p>
-                    <span class="rating">⭐ 4.12</span>
-                    <span class="rating-count">(1.670 reviews)</span>
-                </div>
-            </div>
-            <span class="genre">📖 Literaire fictie / Historisch</span>
-            <div class="series-ok">✓ Standalone - geen serie</div>
-            <div class="summary">
-                <strong>Samenvatting:</strong> Een ontroerend verhaal over familie, oorlog en de kracht van herinneringen, gesitueerd in Italië.
-            </div>
-            <div class="reviews">
-                <strong>Populaire reviews:</strong>
-                <div class="review">"Emotioneel en prachtig geschreven. De personages blijven je bij."</div>
-            </div>
+    </div>
+    
+    <div class="book-card">
+        <div class="book-cover">
+            <img src="https://media.bookchoice.com/images/c3cdd95d-e0a5-4e6f-b4f1-1b3e0e8c1f9a.jpg?w=300" alt="As in de sneeuw" onerror="this.src='https://via.placeholder.com/150x225?text=No+Cover'">
         </div>
-
-        <!-- Book 4 -->
-        <div class="book">
-            <div class="book-header">
-                <input type="checkbox" class="book-checkbox" name="book" value="4" id="book4">
-                <div>
-                    <label for="book4" class="book-title">4. De geluksbrenger</label>
-                    <p class="book-author">Pierre Jarawan</p>
-                    <span class="rating">⭐ 3.90</span>
-                    <span class="rating-count">(145 reviews)</span>
-                </div>
+        <div class="book-info">
+            <h2>As in de sneeuw</h2>
+            <p class="author">Oriana Ramunno</p>
+            <div class="rating">
+                <span class="stars">★★★★½</span>
+                <span class="score">4.8</span>
+                <span class="count">(10 beoordelingen)</span>
             </div>
-            <span class="genre">📖 Literaire fictie</span>
-            <div class="series-ok">✓ Standalone - geen serie</div>
-            <div class="summary">
-                <strong>Samenvatting:</strong> Een meeslepend verhaal over identiteit, roots en de zoektocht naar geluk tussen twee culturen.
-            </div>
-            <div class="reviews">
-                <strong>Populaire reviews:</strong>
-                <div class="review">"Jarawan schrijft zo beeldend dat je je in het Midden-Oosten waant."</div>
-            </div>
+            <span class="genre-tag">Thriller</span>
+            <span class="series-badge">📚 Hugo Fischer #1</span>
+            <p class="summary">De eerste zaak van rechercheur Hugo Fischer. Een gripping thriller vol spanning.</p>
+            <a href="https://www.goodreads.com/book/show/223148693-as-in-de-sneeuw" target="_blank" class="goodreads-link">Bekijk op Goodreads →</a>
+            <label class="checkbox-container">
+                <input type="checkbox" name="book" value="as-in-de-sneeuw">
+                <span class="checkmark"></span>
+                Selecteer dit boek
+            </label>
         </div>
-
-        <!-- Book 5 -->
-        <div class="book">
-            <div class="book-header">
-                <input type="checkbox" class="book-checkbox" name="book" value="5" id="book5">
-                <div>
-                    <label for="book5" class="book-title">5. Rustimo</label>
-                    <p class="book-author">Lucas Zandberg</p>
-                    <span class="rating">⭐ 3.68</span>
-                    <span class="rating-count">(19 reviews)</span>
-                </div>
-            </div>
-            <span class="genre">📖 Literaire fictie</span>
-            <div class="series-ok">✓ Standalone - geen serie</div>
-            <div class="summary">
-                <strong>Samenvatting:</strong> Een bijzonder debuut over een jonge man die zijn plek zoekt in de wereld en worstelt met verwachtingen.
-            </div>
-            <div class="reviews">
-                <strong>Populaire reviews:</strong>
-                <div class="review">"Verrassend en origineel. Een schrijver om in de gaten te houden."</div>
-            </div>
+    </div>
+    
+    <div class="book-card">
+        <div class="book-cover">
+            <img src="https://media.bookchoice.com/images/d4cdd95d-e0a5-4e6f-b4f1-1b3e0e8c1f9b.jpg?w=300" alt="De geluksbrenger" onerror="this.src='https://via.placeholder.com/150x225?text=No+Cover'">
         </div>
-
-        <!-- Book 6 -->
-        <div class="book">
-            <div class="book-header">
-                <input type="checkbox" class="book-checkbox" name="book" value="6" id="book6">
-                <div>
-                    <label for="book6" class="book-title">6. Mijn naam is Edino</label>
-                    <p class="book-author">Edino van Dorsten</p>
-                    <span class="rating">⭐ 4.45</span>
-                    <span class="rating-count">(138 reviews)</span>
-                </div>
+        <div class="book-info">
+            <h2>De geluksbrenger</h2>
+            <p class="author">Pierre Jarawan</p>
+            <div class="rating">
+                <span class="stars">★★★½☆</span>
+                <span class="score">3.9</span>
+                <span class="count">(145 beoordelingen)</span>
             </div>
-            <span class="genre">📘 Non-fictie / Autobiografie</span>
-            <div class="series-ok">✓ Standalone - geen serie</div>
-            <div class="summary">
-                <strong>Samenvatting:</strong> Het indrukwekkende levensverhaal van Edino, van straatarm kind tot succesvolle ondernemer.
-            </div>
-            <div class="reviews">
-                <strong>Populaire reviews:</strong>
-                <div class="review">"Inspirerend en ontroerend. Laat zien dat je alles kunt bereiken."</div>
-            </div>
+            <span class="genre-tag">Roman</span>
+            <span class="standalone-badge">✓ Standalone</span>
+            <p class="summary">Een ontroerend verhaal over hoop, geluk en de kracht van menselijke verbinding.</p>
+            <a href="https://www.goodreads.com/book/show/221174949-de-geluksbrenger" target="_blank" class="goodreads-link">Bekijk op Goodreads →</a>
+            <label class="checkbox-container">
+                <input type="checkbox" name="book" value="de-geluksbrenger">
+                <span class="checkmark"></span>
+                Selecteer dit boek
+            </label>
         </div>
-
-        <!-- Book 7 -->
-        <div class="book">
-            <div class="book-header">
-                <input type="checkbox" class="book-checkbox" name="book" value="7" id="book7">
-                <div>
-                    <label for="book7" class="book-title">7. Flora's erfenis</label>
-                    <p class="book-author">Clarisse Sabard</p>
-                    <span class="rating">⭐ 4.31</span>
-                    <span class="rating-count">(286 reviews)</span>
-                </div>
-            </div>
-            <span class="genre">💕 Romantiek / Feel-good</span>
-            <div class="series-ok">✓ Standalone - geen serie</div>
-            <div class="summary">
-                <strong>Samenvatting:</strong> Een hartverwarmend verhaal over een jonge vrouw die een bakkerij erft en familiegeheimen ontdekt.
-            </div>
-            <div class="reviews">
-                <strong>Populaire reviews:</strong>
-                <div class="review">"Heerlijk feelgood boek, perfect voor een regenachtige zondag."</div>
-            </div>
+    </div>
+    
+    <div class="book-card">
+        <div class="book-cover">
+            <img src="https://media.bookchoice.com/images/e5cdd95d-e0a5-4e6f-b4f1-1b3e0e8c1f9c.jpg?w=300" alt="Rustimo" onerror="this.src='https://via.placeholder.com/150x225?text=No+Cover'">
         </div>
-
-        <!-- Book 8 -->
-        <div class="book">
-            <div class="book-header">
-                <input type="checkbox" class="book-checkbox" name="book" value="8" id="book8">
-                <div>
-                    <label for="book8" class="book-title">8. Slaap zacht</label>
-                    <p class="book-author">B.A. Paris</p>
-                    <span class="rating">⭐ 3.72</span>
-                    <span class="rating-count">(1.202 reviews)</span>
-                </div>
+        <div class="book-info">
+            <h2>Rustimo</h2>
+            <p class="author">Lucas Zandberg</p>
+            <div class="rating">
+                <span class="stars">★★★½☆</span>
+                <span class="score">3.68</span>
+                <span class="count">(19 beoordelingen)</span>
             </div>
-            <span class="genre">🔪 Thriller</span>
-            <div class="series-ok">✓ Standalone - geen serie</div>
-            <div class="summary">
-                <strong>Samenvatting:</strong> Een psychologische thriller over een vrouw die ontdekt dat haar perfecte leven gebouwd is op leugens.
-            </div>
-            <div class="reviews">
-                <strong>Populaire reviews:</strong>
-                <div class="review">"Typisch B.A. Paris - je blijft doorlezen tot de laatste pagina."</div>
-            </div>
+            <span class="genre-tag">Literaire roman</span>
+            <span class="standalone-badge">✓ Standalone</span>
+            <p class="summary">Een literaire roman over zelfontdekking en de zoektocht naar innerlijke rust.</p>
+            <a href="https://www.goodreads.com/book/show/218543912-rustimo" target="_blank" class="goodreads-link">Bekijk op Goodreads →</a>
+            <label class="checkbox-container">
+                <input type="checkbox" name="book" value="rustimo">
+                <span class="checkmark"></span>
+                Selecteer dit boek
+            </label>
         </div>
-
-        <p class="selected-count">Geselecteerd: <span id="count">0</span> boeken</p>
-        <button type="submit" class="submit-btn">📥 Verstuur selectie</button>
-    </form>
-
+    </div>
+    
+    <div class="book-card">
+        <div class="book-cover">
+            <img src="https://media.bookchoice.com/images/f6cdd95d-e0a5-4e6f-b4f1-1b3e0e8c1f9d.jpg?w=300" alt="Mijn naam is Edino" onerror="this.src='https://via.placeholder.com/150x225?text=No+Cover'">
+        </div>
+        <div class="book-info">
+            <h2>Mijn naam is Edino</h2>
+            <p class="author">Edino Van Dorsten</p>
+            <div class="rating">
+                <span class="stars">★★★★☆</span>
+                <span class="score">4.31</span>
+                <span class="count">(330 beoordelingen)</span>
+            </div>
+            <span class="genre-tag">Non-fictie</span>
+            <span class="standalone-badge">✓ Standalone</span>
+            <p class="summary">Het waargebeurde verhaal van Edino over het verborgen gezin in Ruinerwold - een aangrijpend relaas over overleven en veerkracht.</p>
+            <a href="https://www.goodreads.com/book/show/236094366-mijn-naam-is-edino" target="_blank" class="goodreads-link">Bekijk op Goodreads →</a>
+            <label class="checkbox-container">
+                <input type="checkbox" name="book" value="mijn-naam-is-edino">
+                <span class="checkmark"></span>
+                Selecteer dit boek
+            </label>
+        </div>
+    </div>
+    
+    <div class="book-card">
+        <div class="book-cover">
+            <img src="https://media.bookchoice.com/images/g7cdd95d-e0a5-4e6f-b4f1-1b3e0e8c1f9e.jpg?w=300" alt="Flora's erfenis" onerror="this.src='https://via.placeholder.com/150x225?text=No+Cover'">
+        </div>
+        <div class="book-info">
+            <h2>Flora's erfenis</h2>
+            <p class="author">Clarisse Sabard</p>
+            <div class="rating">
+                <span class="stars">★★★★☆</span>
+                <span class="score">4.31</span>
+                <span class="count">(286 beoordelingen)</span>
+            </div>
+            <span class="genre-tag">Roman</span>
+            <span class="series-badge">📚 De Lelievilla #1</span>
+            <p class="summary">De start van De Lelievilla-serie. Flora zoekt toevlucht in Normandië en ontdekt een groot familiegeheim.</p>
+            <a href="https://www.goodreads.com/book/show/237829784-flora-s-erfenis" target="_blank" class="goodreads-link">Bekijk op Goodreads →</a>
+            <label class="checkbox-container">
+                <input type="checkbox" name="book" value="floras-erfenis">
+                <span class="checkmark"></span>
+                Selecteer dit boek
+            </label>
+        </div>
+    </div>
+    
+    <div class="book-card">
+        <div class="book-cover">
+            <img src="https://media.bookchoice.com/images/h8cdd95d-e0a5-4e6f-b4f1-1b3e0e8c1f9f.jpg?w=300" alt="Slaap zacht" onerror="this.src='https://via.placeholder.com/150x225?text=No+Cover'">
+        </div>
+        <div class="book-info">
+            <h2>Slaap zacht</h2>
+            <p class="author">B.A. Paris</p>
+            <div class="rating">
+                <span class="stars">★★★½☆</span>
+                <span class="score">3.72</span>
+                <span class="count">(1,202 beoordelingen)</span>
+            </div>
+            <span class="genre-tag">Thriller</span>
+            <span class="standalone-badge">✓ Standalone</span>
+            <p class="summary">Een jonge vrouw wordt vermoord. Elle Nugent was een van de laatsten die haar zag en weet wie de dader is. Maar de politie gelooft haar niet...</p>
+            <a href="https://www.goodreads.com/book/show/236900264-slaap-zacht" target="_blank" class="goodreads-link">Bekijk op Goodreads →</a>
+            <label class="checkbox-container">
+                <input type="checkbox" name="book" value="slaap-zacht">
+                <span class="checkmark"></span>
+                Selecteer dit boek
+            </label>
+        </div>
+    </div>
+    
+        </div>
+        
+        <div class="footer">
+            <div class="counter">
+                <span id="selected-count">0</span> boek(en) geselecteerd
+            </div>
+            <button class="submit-btn" onclick="submitSelection()">
+                Verzend Selectie
+            </button>
+        </div>
+    </div>
+    
     <script>
         const WEBHOOK_URL = 'https://webhooks.tasklet.ai/v1/public/webhook?token=51c51c4983d66c1d605b78859ecb4c8b';
         
-        // Update counter
-        document.querySelectorAll('.book-checkbox').forEach(cb => {
-            cb.addEventListener('change', () => {
-                const count = document.querySelectorAll('.book-checkbox:checked').length;
-                document.getElementById('count').textContent = count;
-            });
+        // Update counter when checkboxes change
+        document.querySelectorAll('input[name="book"]').forEach(checkbox => {
+            checkbox.addEventListener('change', updateCounter);
         });
-
-        // Form submission
-        document.getElementById('bookForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const selected = [...document.querySelectorAll('.book-checkbox:checked')].map(cb => cb.value);
+        
+        function updateCounter() {
+            const count = document.querySelectorAll('input[name="book"]:checked').length;
+            document.getElementById('selected-count').textContent = count;
+        }
+        
+        async function submitSelection() {
+            const checkboxes = document.querySelectorAll('input[name="book"]:checked');
+            const selectedBooks = Array.from(checkboxes).map(cb => cb.value);
             
-            if (selected.length === 0) {
+            if (selectedBooks.length === 0) {
                 alert('Selecteer minimaal één boek!');
                 return;
             }
-
+            
+            const data = {
+                selected_books: selectedBooks,
+                month: document.getElementById('month').value
+            };
+            
             try {
                 await fetch(WEBHOOK_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'text/plain' },
-                    body: JSON.stringify({
-                        month: 'januari-2026',
-                        selected_books: selected
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
                 });
                 
-                // With no-cors mode, we assume success
-                document.body.innerHTML = '<div style="text-align:center;padding:50px;font-family:system-ui;"><h1>✅ Selectie verzonden!</h1><p>Je gekozen boeken worden gedownload naar je Google Drive.</p></div>';
-            } catch (err) {
-                alert('Kon geen verbinding maken. Probeer het later opnieuw.');
+                document.body.innerHTML = '<div style="text-align:center;padding:50px;font-family:sans-serif;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;"><div style="background:white;padding:40px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.2);"><h1 style="color:#48bb78;margin-bottom:20px;">✅ Selectie verzonden!</h1><p style="color:#666;">Je gekozen boeken worden gedownload naar je Google Drive.</p></div></div>';
+            } catch (error) {
+                alert('Fout bij verzenden: ' + error.message);
             }
-        });
+        }
     </script>
 </body>
 </html>
