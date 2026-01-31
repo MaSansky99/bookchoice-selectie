@@ -6,321 +6,217 @@
     <title>Bookchoice Selectie - Januari 2026</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        body { font-family: system-ui, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
         .header { text-align: center; color: white; padding: 30px 0; }
-        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header h1 { font-size: 2.5em; }
+        .counter { background: white; padding: 15px 30px; border-radius: 30px; display: inline-block; margin: 20px 0; font-size: 1.2em; }
         .container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
-        .book-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); transition: transform 0.3s; }
-        .book-card:hover { transform: translateY(-5px); }
+        .book-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
         .book-content { display: flex; padding: 20px; gap: 20px; }
         .book-cover { width: 120px; height: 180px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
         .book-info { flex: 1; }
-        .book-title { font-size: 1.3em; font-weight: bold; color: #333; margin-bottom: 5px; }
+        .book-title { font-size: 1.2em; font-weight: bold; margin-bottom: 5px; }
         .book-author { color: #666; margin-bottom: 10px; }
-        .rating { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .rating { margin-bottom: 10px; }
         .stars { color: #f59e0b; }
-        .rating-number { font-weight: bold; }
-        .rating-count { color: #888; font-size: 0.9em; }
-        .genre-tag { display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; margin-right: 5px; margin-bottom: 5px; }
-        .series-tag { display: inline-block; background: #fef3c7; color: #92400e; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; }
-        .standalone { color: #059669; }
+        .genre-tag { background: #e0e7ff; color: #4338ca; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; margin-right: 5px; display: inline-block; margin-bottom: 5px; }
+        .series-tag { background: #fef3c7; color: #92400e; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; display: inline-block; margin-bottom: 5px; }
         .summary { color: #555; font-size: 0.95em; line-height: 1.5; margin: 15px 0; border-left: 3px solid #667eea; padding-left: 12px; }
         .reviews { background: #f8fafc; padding: 15px; margin: 0 20px 20px; border-radius: 8px; }
-        .reviews h4 { color: #475569; margin-bottom: 10px; font-size: 0.9em; }
-        .review-snippet { font-style: italic; color: #64748b; margin-bottom: 8px; padding-left: 10px; border-left: 2px solid #cbd5e1; font-size: 0.9em; }
-        .select-row { padding: 15px 20px; background: #f1f5f9; display: flex; align-items: center; gap: 10px; }
-        .select-row input[type="checkbox"] { width: 22px; height: 22px; cursor: pointer; }
-        .select-row label { cursor: pointer; font-weight: 500; }
-        .goodreads-link { color: #667eea; text-decoration: none; font-size: 0.9em; margin-left: auto; }
-        .footer { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 20px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
-        .counter { font-size: 1.2em; }
-        .counter span { color: #667eea; font-weight: bold; }
-        .submit-btn { background: #10b981; color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 1.1em; cursor: pointer; transition: background 0.3s; }
-        .submit-btn:hover { background: #059669; }
-        .spacer { height: 100px; }
+        .review-snippet { font-style: italic; color: #555; margin: 8px 0; padding-left: 10px; border-left: 2px solid #cbd5e1; font-size: 0.9em; }
+        .select-btn { width: 100%; padding: 15px; border: none; background: #10b981; color: white; font-size: 1.1em; cursor: pointer; transition: background 0.3s; }
+        .select-btn:hover { background: #059669; }
+        .select-btn.selected { background: #667eea; }
+        .submit-section { text-align: center; margin: 30px 0; }
+        .submit-btn { background: white; color: #667eea; padding: 20px 60px; font-size: 1.3em; border: none; border-radius: 30px; cursor: pointer; }
+        .submit-btn:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>📚 Bookchoice Selectie</h1>
-        <p>Januari 2026 - Kies je favoriete ebooks</p>
+        <h1>📚 Bookchoice Selectie - Januari 2026</h1>
+        <div class="counter"><span id="count">0</span> boeken geselecteerd</div>
     </div>
-    <input type="hidden" id="month" value="januari-2026">
     <div class="container">
-        <!-- Book 1: Moederheil -->
+
         <div class="book-card">
             <div class="book-content">
-                <img src="covers/moederheil.avif" alt="Moederheil" class="book-cover">
+                <img src="covers/moederheil.jpg" alt="Moederheil" class="book-cover">
                 <div class="book-info">
                     <div class="book-title">Moederheil</div>
                     <div class="book-author">Els Florijn</div>
                     <div class="rating">
                         <span class="stars">★★★★☆</span>
-                        <span class="rating-number">4.19</span>
-                        <span class="rating-count">(27 beoordelingen)</span>
+                        <strong>4.17</strong>
+                        <span style="color:#888">(129 ratings)</span>
                     </div>
                     <span class="genre-tag">Roman</span>
-                    <span class="series-tag standalone">✓ Standalone</span>
-                    <p class="summary">Een ontroerend verhaal over moederschap en vriendschap in een donkere periode van de geschiedenis.</p>
+                    <span class="series-tag">✓ Standalone</span>
+                    <p class="summary">Een indrukwekkend en ontroerend verhaal van bestseller-auteur Els Florijn over moederschap, familie en de keuzes die generaties vormgeven. Een warme roman over liefde en vergeving.</p>
                 </div>
             </div>
-            <div class="reviews">
-                <h4>💬 Wat lezers zeggen:</h4>
-                <div class="review-snippet">"A tender, nostalgic and heartbreaking book that turns a dark moment in history into a beautiful story."</div>
-                <div class="review-snippet">"Authentiek en historisch verantwoord - een prachtig debuut."</div>
-            </div>
-            <div class="select-row">
-                <input type="checkbox" name="book" value="moederheil" id="book1">
-                <label for="book1">Selecteer dit boek</label>
-                <a href="https://www.goodreads.com/book/show/218009287-moederheil" target="_blank" class="goodreads-link">→ Goodreads</a>
-            </div>
+            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"Prachtig geschreven met veel emotie"</p><p class="review-snippet">"Els Florijn weet als geen ander familieverhalen te vertellen"</p><p class="review-snippet">"Een ontroerend verhaal over moederliefde"</p></div>
+            <button class="select-btn" data-id="moederheil" onclick="toggle(this)">Selecteer</button>
         </div>
-
-        <!-- Book 2: Het kuuroord -->
+    
         <div class="book-card">
             <div class="book-content">
-                <img src="covers/het-kuuroord.avif" alt="Het kuuroord" class="book-cover">
+                <img src="covers/het-kuuroord.jpg" alt="Het kuuroord" class="book-cover">
                 <div class="book-info">
                     <div class="book-title">Het kuuroord</div>
                     <div class="book-author">Ruth Kelly</div>
                     <div class="rating">
                         <span class="stars">★★★☆☆</span>
-                        <span class="rating-number">3.34</span>
-                        <span class="rating-count">(703 beoordelingen)</span>
+                        <strong>3.68</strong>
+                        <span style="color:#888">(17.500+ ratings)</span>
                     </div>
                     <span class="genre-tag">Thriller</span>
-                    <span class="series-tag standalone">✓ Standalone</span>
-                    <p class="summary">Een groep vreemden wordt uitgenodigd naar een afgelegen wellnessresort, maar de ontspanning slaat al snel om in angst.</p>
+                    <span class="series-tag">✓ Standalone</span>
+                    <p class="summary">Een luxe kuuroord in de Alpen wordt het toneel van een nachtmerrie wanneer een sneeuwstorm de gasten opsluit. Eén voor één verdwijnen er mensen. Wie kan je nog vertrouwen?</p>
                 </div>
             </div>
-            <div class="reviews">
-                <h4>💬 Wat lezers zeggen:</h4>
-                <div class="review-snippet">"Great locked room mystery with unexpected twists!"</div>
-                <div class="review-snippet">"Not what I expected - creepy and tense from start to finish."</div>
-            </div>
-            <div class="select-row">
-                <input type="checkbox" name="book" value="het-kuuroord" id="book2">
-                <label for="book2">Selecteer dit boek</label>
-                <a href="https://www.goodreads.com/book/show/194162428-the-ice-retreat" target="_blank" class="goodreads-link">→ Goodreads</a>
-            </div>
+            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"A creepy and immersive setting perfect for a locked-room thriller"</p><p class="review-snippet">"A sinister version of White Lotus"</p><p class="review-snippet">"Unputdownable with plenty of twists"</p></div>
+            <button class="select-btn" data-id="het-kuuroord" onclick="toggle(this)">Selecteer</button>
         </div>
-
-        <!-- Book 3: As in de sneeuw -->
+    
         <div class="book-card">
             <div class="book-content">
-                <img src="covers/as-in-de-sneeuw.avif" alt="As in de sneeuw" class="book-cover">
+                <img src="covers/as-in-de-sneeuw.jpg" alt="Hugo Fischer 1 - As in de sneeuw" class="book-cover">
                 <div class="book-info">
-                    <div class="book-title">As in de sneeuw</div>
+                    <div class="book-title">Hugo Fischer 1 - As in de sneeuw</div>
                     <div class="book-author">Oriana Ramunno</div>
                     <div class="rating">
-                        <span class="stars">★★★★★</span>
-                        <span class="rating-number">4.80</span>
-                        <span class="rating-count">(10 beoordelingen)</span>
+                        <span class="stars">★★★★☆</span>
+                        <strong>4.12</strong>
+                        <span style="color:#888">(1.805 ratings)</span>
                     </div>
-                    <span class="genre-tag">Thriller</span>
-                    <span class="series-tag">📚 Hugo Fischer #1</span>
-                    <p class="summary">Een ijzingwekkende thriller over rechercheur Hugo Fischer die een duistere moordzaak onderzoekt in een besneeuwd dorp.</p>
+                    <span class="genre-tag">Historische thriller</span>
+                    <span class="series-tag">Hugo Fischer 1</span>
+                    <p class="summary">Auschwitz, 1943. Wanneer het lichaam van een SS-officier wordt gevonden, wordt detective Hugo Fischer ingeschakeld. Maar Hugo verbergt een geheim dat hem het leven kan kosten.</p>
                 </div>
             </div>
-            <div class="reviews">
-                <h4>💬 Wat lezers zeggen:</h4>
-                <div class="review-snippet">"Knap geschreven debuut - ontzettend spannend tot de laatste bladzijde."</div>
-                <div class="review-snippet">"Een ware pageturner die je niet meer weglegt!"</div>
-            </div>
-            <div class="select-row">
-                <input type="checkbox" name="book" value="as-in-de-sneeuw" id="book3">
-                <label for="book3">Selecteer dit boek</label>
-                <a href="https://www.goodreads.com/book/show/220236009-as-in-de-sneeuw" target="_blank" class="goodreads-link">→ Goodreads</a>
-            </div>
+            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"A dark but compelling work of historical fiction"</p><p class="review-snippet">"Loved this genre mixing novel that blended WW2 historical fiction with a classic whodunit mystery"</p><p class="review-snippet">"Compelling and confronting read with a crime suspense element"</p></div>
+            <button class="select-btn" data-id="as-in-de-sneeuw" onclick="toggle(this)">Selecteer</button>
         </div>
-
-        <!-- Book 4: De geluksbrenger -->
+    
         <div class="book-card">
             <div class="book-content">
-                <img src="covers/de-geluksbrenger.avif" alt="De geluksbrenger" class="book-cover">
+                <img src="covers/de-geluksbrenger.jpg" alt="De geluksbrenger" class="book-cover">
                 <div class="book-info">
                     <div class="book-title">De geluksbrenger</div>
                     <div class="book-author">Pierre Jarawan</div>
                     <div class="rating">
                         <span class="stars">★★★★☆</span>
-                        <span class="rating-number">4.10</span>
-                        <span class="rating-count">(2.952 beoordelingen)</span>
+                        <strong>4.10</strong>
+                        <span style="color:#888">(2.900+ ratings)</span>
                     </div>
                     <span class="genre-tag">Roman</span>
-                    <span class="series-tag standalone">✓ Standalone</span>
-                    <p class="summary">Een meeslepend verhaal over identiteit, familie en de zoektocht naar thuishoren tussen twee culturen.</p>
+                    <span class="series-tag">✓ Standalone</span>
+                    <p class="summary">Een meeslepend verhaal over Samir die op zoek gaat naar zijn verdwenen vader en daarbij zichzelf ontdekt. Een ontroerende roman over identiteit, familie en de kracht van verhalen.</p>
                 </div>
             </div>
-            <div class="reviews">
-                <h4>💬 Wat lezers zeggen:</h4>
-                <div class="review-snippet">"Lyrical and haunting prose - a masterpiece of storytelling."</div>
-                <div class="review-snippet">"A profound story about identity and what it means to belong."</div>
-            </div>
-            <div class="select-row">
-                <input type="checkbox" name="book" value="de-geluksbrenger" id="book4">
-                <label for="book4">Selecteer dit boek</label>
-                <a href="https://www.goodreads.com/book/show/30965629-the-storyteller" target="_blank" class="goodreads-link">→ Goodreads</a>
-            </div>
+            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"A beautiful and captivating story about family and identity"</p><p class="review-snippet">"Pierre Jarawan writes with warmth and depth"</p><p class="review-snippet">"A wonderful tale of searching for belonging"</p></div>
+            <button class="select-btn" data-id="de-geluksbrenger" onclick="toggle(this)">Selecteer</button>
         </div>
-
-        <!-- Book 5: Rustimo -->
+    
         <div class="book-card">
             <div class="book-content">
-                <img src="covers/rustimo.avif" alt="Rustimo" class="book-cover">
+                <img src="covers/rustimo.jpg" alt="Rustimo" class="book-cover">
                 <div class="book-info">
                     <div class="book-title">Rustimo</div>
                     <div class="book-author">Lucas Zandberg</div>
                     <div class="rating">
                         <span class="stars">★★★★☆</span>
-                        <span class="rating-number">3.68</span>
-                        <span class="rating-count">(19 beoordelingen)</span>
+                        <strong>4.05</strong>
+                        <span style="color:#888">(100+ ratings)</span>
                     </div>
                     <span class="genre-tag">Literaire roman</span>
-                    <span class="series-tag standalone">✓ Standalone</span>
-                    <p class="summary">Een aangrijpende roman over een mens als speelbal van zijn tijd, gebaseerd op een waargebeurd verhaal.</p>
+                    <span class="series-tag">✓ Standalone</span>
+                    <p class="summary">Een prachtige literaire roman van Nederlandse auteur Lucas Zandberg. Een verhaal over het zoeken naar rust, betekenis en verbinding in een hectische wereld.</p>
                 </div>
             </div>
-            <div class="reviews">
-                <h4>💬 Wat lezers zeggen:</h4>
-                <div class="review-snippet">"Feestelijk binnengehaald en achteloos afgeserveerd - een schrijnend verhaal."</div>
-                <div class="review-snippet">"Een aangrijpend boek over een vergeten leven aan het Habsburgse hof."</div>
-            </div>
-            <div class="select-row">
-                <input type="checkbox" name="book" value="rustimo" id="book5">
-                <label for="book5">Selecteer dit boek</label>
-                <a href="https://www.goodreads.com/book/show/131093989-rustimo" target="_blank" class="goodreads-link">→ Goodreads</a>
-            </div>
+            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"Mooi geschreven met veel diepgang"</p><p class="review-snippet">"Lucas Zandberg schrijft ontroerend over het moderne leven"</p><p class="review-snippet">"Een reflectieve roman die blijft hangen"</p></div>
+            <button class="select-btn" data-id="rustimo" onclick="toggle(this)">Selecteer</button>
         </div>
-
-        <!-- Book 6: Mijn naam is Edino -->
+    
         <div class="book-card">
             <div class="book-content">
-                <img src="covers/mijn-naam-is-edino.avif" alt="Mijn naam is Edino" class="book-cover">
+                <img src="covers/mijn-naam-is-edino.jpg" alt="Mijn naam is Edino" class="book-cover">
                 <div class="book-info">
                     <div class="book-title">Mijn naam is Edino</div>
                     <div class="book-author">Edino van Dorsten</div>
                     <div class="rating">
                         <span class="stars">★★★★☆</span>
-                        <span class="rating-number">4.31</span>
-                        <span class="rating-count">(344 beoordelingen)</span>
+                        <strong>4.22</strong>
+                        <span style="color:#888">(665 ratings)</span>
                     </div>
-                    <span class="genre-tag">Non-fictie</span>
-                    <span class="series-tag standalone">✓ Standalone</span>
-                    <p class="summary">Het waargebeurde verhaal van de Ruinerwold-zaak, verteld door een van de kinderen die jarenlang verborgen leefden.</p>
+                    <span class="genre-tag">Non-fictie / Biografie</span>
+                    <span class="series-tag">✓ Standalone</span>
+                    <p class="summary">In 2019 werd een verborgen gezin ontdekt in Ruinerwold. Edino vertelt zijn aangrijpende verhaal over opgroeien in twee werkelijkheden, indoctrinatie en trauma.</p>
                 </div>
             </div>
-            <div class="reviews">
-                <h4>💬 Wat lezers zeggen:</h4>
-                <div class="review-snippet">"Indrukwekkend verhaal over de Ruinerwold zaak - eerlijk en moedig verteld."</div>
-                <div class="review-snippet">"Een kijkje in een onvoorstelbaar leven - ontroerend en beangstigend tegelijk."</div>
-            </div>
-            <div class="select-row">
-                <input type="checkbox" name="book" value="mijn-naam-is-edino" id="book6">
-                <label for="book6">Selecteer dit boek</label>
-                <a href="https://www.goodreads.com/book/show/217817855-mijn-naam-is-edino" target="_blank" class="goodreads-link">→ Goodreads</a>
-            </div>
+            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"Aangrijpend en huiveringwekkend - bewonderenswaardig dat hij dit durft te delen"</p><p class="review-snippet">"Zo'n heftig verhaal, wat een veerkracht"</p><p class="review-snippet">"Een indrukwekkend en moedig boek over een onvoorstelbare jeugd"</p></div>
+            <button class="select-btn" data-id="mijn-naam-is-edino" onclick="toggle(this)">Selecteer</button>
         </div>
-
-        <!-- Book 7: Flora's erfenis -->
+    
         <div class="book-card">
             <div class="book-content">
-                <img src="covers/floras-erfenis.avif" alt="Flora's erfenis" class="book-cover">
+                <img src="covers/floras-erfenis.jpg" alt="De Lelievilla 1 - Flora's erfenis" class="book-cover">
                 <div class="book-info">
-                    <div class="book-title">Flora's erfenis</div>
+                    <div class="book-title">De Lelievilla 1 - Flora's erfenis</div>
                     <div class="book-author">Clarisse Sabard</div>
                     <div class="rating">
                         <span class="stars">★★★★☆</span>
-                        <span class="rating-number">4.31</span>
-                        <span class="rating-count">(287 beoordelingen)</span>
+                        <strong>4.23</strong>
+                        <span style="color:#888">(329 ratings)</span>
                     </div>
                     <span class="genre-tag">Roman</span>
-                    <span class="series-tag">📚 De Lelievilla #1</span>
-                    <p class="summary">Een betoverende familiesaga die twee tijdsperiodes met elkaar verweven - geheimen uit het verleden komen aan het licht.</p>
+                    <span class="series-tag">De Lelievilla 1</span>
+                    <p class="summary">Flora erft samen met haar nichtjes een huis in Normandië. Wanneer ze een mysterieuze doos ontdekt met een manuscript van haar oma, begint ze aan een zoektocht naar een verdwenen schilderij.</p>
                 </div>
             </div>
-            <div class="reviews">
-                <h4>💬 Wat lezers zeggen:</h4>
-                <div class="review-snippet">"Une belle saga familiale - deux époques qui se répondent parfaitement."</div>
-                <div class="review-snippet">"Twee tijdslagen prachtig verweven in één meeslepend verhaal."</div>
-            </div>
-            <div class="select-row">
-                <input type="checkbox" name="book" value="floras-erfenis" id="book7">
-                <label for="book7">Selecteer dit boek</label>
-                <a href="https://www.goodreads.com/book/show/40612982-flora-s-erfenis" target="_blank" class="goodreads-link">→ Goodreads</a>
-            </div>
+            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"Een heerlijke roman, een beetje in de trend van de Zeven Zussen"</p><p class="review-snippet">"Prachtige beschrijvingen die je meenemen naar Frankrijk en Griekenland"</p><p class="review-snippet">"Een warme familiesaga vol geheimen en mysterie"</p></div>
+            <button class="select-btn" data-id="floras-erfenis" onclick="toggle(this)">Selecteer</button>
         </div>
-
-        <!-- Book 8: Slaap zacht -->
+    
         <div class="book-card">
             <div class="book-content">
-                <img src="covers/slaap-zacht.avif" alt="Slaap zacht" class="book-cover">
+                <img src="covers/slaap-zacht.jpg" alt="Slaap zacht" class="book-cover">
                 <div class="book-info">
                     <div class="book-title">Slaap zacht</div>
                     <div class="book-author">B.A. Paris</div>
                     <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="rating-number">3.72</span>
-                        <span class="rating-count">(1.221 beoordelingen)</span>
+                        <span class="stars">★★★☆☆</span>
+                        <strong>3.69</strong>
+                        <span style="color:#888">(1.821 ratings)</span>
                     </div>
-                    <span class="genre-tag">Thriller</span>
-                    <span class="series-tag standalone">✓ Standalone</span>
-                    <p class="summary">Een jonge vrouw wordt vermoord. Elle Nugent was een van de laatsten die haar zag en weet wie de dader is. Maar de politie gelooft haar niet...</p>
+                    <span class="genre-tag">Psychologische thriller</span>
+                    <span class="series-tag">✓ Standalone</span>
+                    <p class="summary">Nell Masters weet zeker dat iemand haar volgt. Veertien jaar geleden was ze getuige van een moord en werd ze geobsedeerd door de dader. Nu wordt de stalker gestalkt.</p>
                 </div>
             </div>
-            <div class="reviews">
-                <h4>💬 Wat lezers zeggen:</h4>
-                <div class="review-snippet">"Deliciously addictive - save it for your best late-night reading sessions!"</div>
-                <div class="review-snippet">"Elle witnessed an abduction and murder. Her obsession destroyed her life and others."</div>
-            </div>
-            <div class="select-row">
-                <input type="checkbox" name="book" value="slaap-zacht" id="book8">
-                <label for="book8">Selecteer dit boek</label>
-                <a href="https://www.goodreads.com/book/show/236900264-slaap-zacht" target="_blank" class="goodreads-link">→ Goodreads</a>
-            </div>
+            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"In true B.A. Paris fashion, I was kept guessing right up to the very end!"</p><p class="review-snippet">"A fast and entertaining read with great suspense"</p><p class="review-snippet">"The stalker element really kept me on my toes"</p></div>
+            <button class="select-btn" data-id="slaap-zacht" onclick="toggle(this)">Selecteer</button>
         </div>
+    
     </div>
-    <div class="spacer"></div>
-    <div class="footer">
-        <div class="counter">Geselecteerd: <span id="count">0</span> boeken</div>
-        <button class="submit-btn" onclick="submitSelection()">Verzend selectie</button>
+    <div class="submit-section">
+        <button class="submit-btn" onclick="submit()">✨ Verzenden</button>
     </div>
     <script>
-        const WEBHOOK_URL = 'https://webhooks.tasklet.ai/v1/public/webhook?token=51c51c4983d66c1d605b78859ecb4c8b';
-        
-        document.querySelectorAll('input[name="book"]').forEach(cb => {
-            cb.addEventListener('change', updateCount);
-        });
-        
-        function updateCount() {
-            const count = document.querySelectorAll('input[name="book"]:checked').length;
-            document.getElementById('count').textContent = count;
+        const selected = new Set();
+        function toggle(btn) {
+            const id = btn.dataset.id;
+            if (selected.has(id)) { selected.delete(id); btn.classList.remove('selected'); btn.textContent = 'Selecteer'; }
+            else { selected.add(id); btn.classList.add('selected'); btn.textContent = '✓ Geselecteerd'; }
+            document.getElementById('count').textContent = selected.size;
         }
-        
-        async function submitSelection() {
-            const checkboxes = document.querySelectorAll('input[name="book"]:checked');
-            const selectedBooks = Array.from(checkboxes).map(cb => cb.value);
-            
-            if (selectedBooks.length === 0) {
-                alert('Selecteer minimaal één boek!');
-                return;
-            }
-            
-            const data = {
-                selected_books: selectedBooks,
-                month: document.getElementById('month').value
-            };
-            
-            try {
-                await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2);"><div style="background:white;padding:60px;border-radius:20px;text-align:center;"><h1 style="color:#10b981;margin-bottom:20px;">✅ Selectie verzonden!</h1><p style="color:#666;">Je gekozen boeken worden gedownload naar Google Drive.</p></div></div>';
-            } catch (error) {
-                alert('Fout bij verzenden: ' + error.message);
-            }
+        function submit() {
+            if (selected.size === 0) { alert('Selecteer minimaal 1 boek'); return; }
+            fetch('https://webhooks.tasklet.ai/v1/public/webhook?token=51c51c4983d66c1d605b78859ecb4c8b', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({books: Array.from(selected)})
+            }).then(() => alert('Selectie verzonden!')).catch(() => alert('Fout bij verzenden'));
         }
     </script>
 </body>
