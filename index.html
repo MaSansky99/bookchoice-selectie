@@ -6,51 +6,55 @@
     <title>Bookchoice Selectie - Februari 2026</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: system-ui, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
         .header { text-align: center; color: white; padding: 30px 0; }
-        .header h1 { font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-        .header p { opacity: 0.9; margin-top: 10px; }
-        .counter { background: white; padding: 15px 30px; border-radius: 30px; display: inline-block; margin: 20px 0; font-size: 1.2em; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
-        .book-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); transition: transform 0.3s; }
-        .book-card:hover { transform: translateY(-5px); }
-        .book-content { display: flex; padding: 20px; gap: 20px; }
-        .book-cover { width: 120px; height: 180px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { opacity: 0.9; }
+        .counter { background: white; padding: 15px 30px; border-radius: 30px; display: inline-block; margin: 20px 0; font-size: 1.2em; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .container { max-width: 900px; margin: 0 auto; }
+        .book-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); margin-bottom: 24px; }
+        .book-header { display: flex; padding: 20px; gap: 20px; border-bottom: 1px solid #eee; }
+        .book-cover { width: 120px; height: 180px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .book-info { flex: 1; }
-        .book-title { font-size: 1.2em; font-weight: bold; margin-bottom: 5px; color: #1a1a2e; }
-        .book-author { color: #666; margin-bottom: 10px; }
-        .rating { margin-bottom: 10px; }
+        .book-title { font-size: 1.4em; font-weight: bold; margin-bottom: 5px; color: #1a1a2e; }
+        .book-author { color: #666; margin-bottom: 12px; font-size: 1.1em; }
+        .rating { margin-bottom: 12px; }
         .stars { color: #f59e0b; font-size: 1.1em; }
-        .rating-num { font-weight: bold; color: #333; }
-        .genre-tag { background: #e0e7ff; color: #4338ca; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; margin-right: 5px; display: inline-block; margin-bottom: 5px; }
-        .series-tag { background: #fef3c7; color: #92400e; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; display: inline-block; }
-        .summary { color: #555; font-size: 0.95em; line-height: 1.5; margin: 15px 0; border-left: 3px solid #667eea; padding-left: 12px; }
-        .reviews { background: #f8fafc; padding: 15px; margin: 0 20px 20px; border-radius: 8px; }
-        .reviews strong { color: #475569; font-size: 0.9em; }
-        .review-snippet { font-style: italic; color: #64748b; margin: 8px 0; padding-left: 10px; border-left: 2px solid #cbd5e1; font-size: 0.9em; }
-        .select-btn { width: 100%; padding: 15px; border: none; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; font-size: 1.1em; cursor: pointer; transition: all 0.3s; font-weight: 600; }
-        .select-btn:hover { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
-        .select-btn.selected { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .submit-section { text-align: center; margin: 30px 0; }
-        .submit-btn { background: white; color: #667eea; padding: 20px 60px; font-size: 1.3em; border: none; border-radius: 30px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.3s; }
+        .rating-num { font-weight: bold; margin-left: 5px; }
+        .rating-count { color: #888; font-size: 0.9em; }
+        .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+        .genre-tag { background: #e0e7ff; color: #4338ca; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; }
+        .series-tag { background: #fef3c7; color: #92400e; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; }
+        .summary { color: #555; font-size: 0.95em; line-height: 1.5; border-left: 3px solid #667eea; padding-left: 12px; }
+        .review-section { padding: 20px; background: #f8fafc; }
+        .review-title { font-weight: 600; margin-bottom: 15px; color: #374151; }
+        .quotes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        @media (max-width: 600px) { .quotes-grid { grid-template-columns: 1fr; } }
+        .quote { font-style: italic; color: #555; padding: 12px; border-radius: 8px; font-size: 0.9em; line-height: 1.4; }
+        .quote.positive { background: #ecfdf5; border-left: 3px solid #10b981; }
+        .quote.negative { background: #fef2f2; border-left: 3px solid #ef4444; }
+        .review-text { color: #444; font-size: 0.95em; line-height: 1.7; }
+        .review-text p { margin-bottom: 14px; }
+        .advice { background: #fffbeb; padding: 14px; border-radius: 8px; font-weight: 500; color: #92400e; margin-top: 15px; line-height: 1.5; }
+        .select-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; font-size: 1.1em; cursor: pointer; transition: all 0.3s; }
+        .select-btn:hover { opacity: 0.9; transform: scale(1.01); }
+        .select-btn.selected { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .submit-section { text-align: center; margin-top: 30px; padding: 30px; }
+        .submit-btn { background: white; color: #764ba2; padding: 18px 50px; font-size: 1.3em; border: none; border-radius: 30px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 20px rgba(0,0,0,0.2); transition: all 0.3s; }
         .submit-btn:hover { transform: scale(1.05); }
-        @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; }
-            .book-content { flex-direction: column; align-items: center; text-align: center; }
-            .summary { border-left: none; padding-left: 0; border-top: 3px solid #667eea; padding-top: 12px; }
-        }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>📚 Bookchoice Selectie</h1>
-        <p>Februari 2026 - Kies jouw favoriete boeken!</p>
-        <div class="counter"><span id="count">0</span> boeken geselecteerd</div>
+        <p>Februari 2026</p>
+        <div class="counter">Geselecteerd: <span id="count">0</span> / 4</div>
     </div>
     <div class="container">
 
         <div class="book-card">
-            <div class="book-content">
+            <div class="book-header">
                 <img src="covers/de-roep-van-een-ver-eiland.jpg" alt="De roep van een ver eiland" class="book-cover">
                 <div class="book-info">
                     <div class="book-title">De roep van een ver eiland</div>
@@ -58,19 +62,29 @@
                     <div class="rating">
                         <span class="stars">★★★★☆</span>
                         <span class="rating-num">4.11</span>
-                        <span style="color:#888">(28 beoordelingen)</span>
+                        <span class="rating-count">(28 beoordelingen)</span>
                     </div>
-                    <span class="genre-tag">Historische roman</span>
-                    <span class="series-tag">✓ Standalone</span>
+                    <div class="tags">
+                        <span class="genre-tag">Historische roman</span>
+                        <span class="series-tag">✓ Standalone</span>
+                    </div>
                     <p class="summary">Liverpool, 1854. De jonge lerares Eve krijgt een buitengewone baan aangeboden als gouvernante voor de blinde dochter van de Sultan van Oman en Zanzibar. In een paleis aan zee ontdekt ze een compleet nieuwe wereld.</p>
                 </div>
             </div>
-            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Een meeslepend verhaal over avontuur en liefde in een exotische setting"</p><p class="review-snippet">"Sarah Lark op haar best - historische details met romantiek verweven"</p><p class="review-snippet">"Een prachtige standalone roman die je meeneemt naar het Midden-Oosten"</p></div>
+            <div class="review-section">
+                <div class="review-title">💬 Wat lezers zeggen:</div>
+                <div class="quotes-grid"><div class="quote positive">"Een meeslepend verhaal dat je meeneemt naar exotische oorden."</div><div class="quote positive">"Sarah Lark weet historische details prachtig te verweven met romantiek."</div><div class="quote negative">"Het verhaal is soms wat voorspelbaar in de romantische ontwikkelingen."</div><div class="quote negative">"De lengte van het boek had korter gekund zonder aan kwaliteit in te boeten."</div></div>
+                <div class="review-text">
+                    <p>Lezers waarderen vooral de rijke historische setting en de gedetailleerde beschrijvingen van het leven in Zanzibar. Sarah Lark slaagt erin om de lezer volledig onder te dompelen in een exotische wereld vol kleuren, geuren en intriges. De karakterontwikkeling van Eve, van bescheiden lerares tot zelfverzekerde vrouw, wordt als inspirerend ervaren. De combinatie van avontuur, cultuurverschillen en een vleugje romantiek maakt dit tot een pageturner voor liefhebbers van historische romans.</p>
+                    <p>Critici wijzen op de voorspelbaarheid van het romantische plotverloop - ervaren Lark-lezers zien de wendingen al van ver aankomen. Ook wordt de lengte van het boek genoemd: sommige passages hadden strakker gekund. Lezers die actie en spanning verwachten, kunnen teleurgesteld raken door het relatief rustige tempo. De score van 4.11 op Goodreads weerspiegelt een solide maar niet uitzonderlijke ontvangst.</p>
+                </div>
+                <div class="advice">💡 Aanbevolen voor liefhebbers van historische romans met een romantische inslag en exotische settings, minder geschikt voor lezers die snelle actie of literaire diepgang zoeken.</div>
+            </div>
             <button class="select-btn" data-id="de-roep-van-een-ver-eiland" onclick="toggle(this)">📖 Selecteer dit boek</button>
         </div>
-    
+
         <div class="book-card">
-            <div class="book-content">
+            <div class="book-header">
                 <img src="covers/de-sterkste-zus.jpg" alt="De sterkste zus" class="book-cover">
                 <div class="book-info">
                     <div class="book-title">De sterkste zus</div>
@@ -78,19 +92,29 @@
                     <div class="rating">
                         <span class="stars">★★★★☆</span>
                         <span class="rating-num">4.42</span>
-                        <span style="color:#888">(103 beoordelingen)</span>
+                        <span class="rating-count">(103 beoordelingen)</span>
                     </div>
-                    <span class="genre-tag">Thriller</span>
-                    <span class="series-tag">✓ Standalone</span>
-                    <p class="summary">Na een jeugd vol geweld en intimidatie verbreekt Claire alle banden met haar familie. Maar het verleden laat zich niet zomaar achter...</p>
+                    <div class="tags">
+                        <span class="genre-tag">Thriller</span>
+                        <span class="series-tag">✓ Standalone</span>
+                    </div>
+                    <p class="summary">Na een jeugd vol geweld en intimidatie verbreekt Claire alle banden met haar familie. Maar wanneer haar moeder meldt dat haar zusje in Brazilië is verdwenen, wankelt haar zorgvuldig opgebouwde wereld.</p>
                 </div>
             </div>
-            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Een bloedstollende thriller die je tot de laatste pagina in zijn greep houdt"</p><p class="review-snippet">"Angelique Haak bewijst wederom een meester van het spanning opbouwen te zijn"</p><p class="review-snippet">"Donker, intens en onvergetelijk"</p></div>
+            <div class="review-section">
+                <div class="review-title">💬 Wat lezers zeggen:</div>
+                <div class="quotes-grid"><div class="quote positive">"Dit is nu al mijn favoriet van deze maand - WAUW."</div><div class="quote positive">"Een indringende en gelaagde thriller die je vanaf de eerste pagina grijpt."</div><div class="quote negative">"Het einde voelde wat gehaast na de opbouw."</div><div class="quote negative">"Sommige plotwendingen waren net iets te toevallig."</div></div>
+                <div class="review-text">
+                    <p>Lezers zijn unaniem enthousiast over de psychologische diepgang van deze thriller. Angelique Haak behandelt het actuele thema femicide met respect en urgentie, zonder in sensatie te vervallen. De gelaagde karakters van de twee zussen, hun traumatische jeugd en de dynamiek tussen hen wordt als meeslepend ervaren. De spanning bouwt langzaam maar onontkoombaar op, met een proloog die de hele leervaring blijft achtervolgen. De schrijfstijl wordt geprezen als 'meesterlijk' door zowel lezers als critici.</p>
+                    <p>Een kleine groep lezers vindt het einde wat gehaast in vergelijking met de zorgvuldige opbouw. Ook worden enkele plotwendingen als net iets te toevallig ervaren, hoewel dit de algehele leeservaring nauwelijks aantast. De 4.42 op Goodreads is opvallend hoog voor een Nederlandse thriller en bevestigt de kwaliteit.</p>
+                </div>
+                <div class="advice">💡 Een absolute aanrader voor thrillerfans die houden van psychologische diepgang en actuele thema's, minder geschikt voor lezers die moeite hebben met zware onderwerpen als huiselijk geweld.</div>
+            </div>
             <button class="select-btn" data-id="de-sterkste-zus" onclick="toggle(this)">📖 Selecteer dit boek</button>
         </div>
-    
+
         <div class="book-card">
-            <div class="book-content">
+            <div class="book-header">
                 <img src="covers/het-wonder-van-het-noorden.jpg" alt="Het wonder van het noorden" class="book-cover">
                 <div class="book-info">
                     <div class="book-title">Het wonder van het noorden</div>
@@ -98,19 +122,29 @@
                     <div class="rating">
                         <span class="stars">★★★½☆</span>
                         <span class="rating-num">3.91</span>
-                        <span style="color:#888">(32 beoordelingen)</span>
+                        <span class="rating-count">(32 beoordelingen)</span>
                     </div>
-                    <span class="genre-tag">Historische roman</span>
-                    <span class="series-tag">✓ Standalone</span>
+                    <div class="tags">
+                        <span class="genre-tag">Historische roman</span>
+                        <span class="series-tag">✓ Standalone</span>
+                    </div>
                     <p class="summary">Een historische roman die zich afspeelt in het hoge noorden. Een verhaal over doorzettingsvermogen, liefde en de kracht van dromen in barre tijden.</p>
                 </div>
             </div>
-            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Prachtig beschreven landschappen en personages"</p><p class="review-snippet">"Een sfeervolle historische roman"</p><p class="review-snippet">"Annemarie Ros weet het verleden tot leven te brengen"</p></div>
+            <div class="review-section">
+                <div class="review-title">💬 Wat lezers zeggen:</div>
+                <div class="quotes-grid"><div class="quote positive">"Prachtig beschreven landschappen die je bijna kunt voelen."</div><div class="quote positive">"Annemarie Ros brengt het verleden op een sfeervolle manier tot leven."</div><div class="quote negative">"Het verhaal komt wat traag op gang."</div><div class="quote negative">"De personages bleven voor mij wat op afstand."</div></div>
+                <div class="review-text">
+                    <p>Liefhebbers van historische romans waarderen de atmosferische beschrijvingen van het noordelijke landschap en de zorgvuldige historische research. Ros weet een sfeer te creëren die de lezer transporteert naar een andere tijd en plaats. De thema's doorzettingsvermogen en hoop resoneren sterk, en de beschrijvingen van het dagelijks leven zijn overtuigend. Voor lezers die graag wegdromen bij een boek is dit een fijne keuze.</p>
+                    <p>Critici noemen het trage tempo als voornaamste minpunt - het verhaal heeft tijd nodig om op stoom te komen. Sommige lezers vinden de personages wat afstandelijk, waardoor de emotionele betrokkenheid minder is. De Goodreads-score van 3.91 duidt op een degelijke maar niet uitblinkende roman die vooral een nichepubliek zal aanspreken.</p>
+                </div>
+                <div class="advice">💡 Geschikt voor geduldige lezers die genieten van sfeervolle historische romans met landschapsbeschrijvingen, minder voor wie actie of snelle plotontwikkeling zoekt.</div>
+            </div>
             <button class="select-btn" data-id="het-wonder-van-het-noorden" onclick="toggle(this)">📖 Selecteer dit boek</button>
         </div>
-    
+
         <div class="book-card">
-            <div class="book-content">
+            <div class="book-header">
                 <img src="covers/de-pleegzoon.jpg" alt="De pleegzoon" class="book-cover">
                 <div class="book-info">
                     <div class="book-title">De pleegzoon</div>
@@ -118,59 +152,89 @@
                     <div class="rating">
                         <span class="stars">★★★½☆</span>
                         <span class="rating-num">3.50</span>
-                        <span style="color:#888">(15 beoordelingen)</span>
+                        <span class="rating-count">(15 beoordelingen)</span>
                     </div>
-                    <span class="genre-tag">Historische roman</span>
-                    <span class="series-tag">Marie d'Harcourt #2</span>
+                    <div class="tags">
+                        <span class="genre-tag">Historische roman</span>
+                        <span class="series-tag">Marie d'Harcourt #2</span>
+                    </div>
                     <p class="summary">1415. Marie d'Harcourt beseft dat haar rol is uitgespeeld nu ze haar man Reinald, hertog van Gelre, geen kinderen heeft geschonken. Een middeleeuwse roman over macht, liefde en opoffering.</p>
                 </div>
             </div>
-            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Een waardige opvolger van De Maagd van Rosendael"</p><p class="review-snippet">"Lydia Rood schept een levendig beeld van de middeleeuwen"</p><p class="review-snippet">"Historische roman met diepgang en emotie"</p></div>
+            <div class="review-section">
+                <div class="review-title">💬 Wat lezers zeggen:</div>
+                <div class="quotes-grid"><div class="quote positive">"Een waardige opvolger van De Maagd van Rosendael."</div><div class="quote positive">"Lydia Rood schept een levendig beeld van de middeleeuwen."</div><div class="quote negative">"Als standalone mist het boek wat context uit het eerste deel."</div><div class="quote negative">"De vele historische details kunnen het leesplezier onderbreken."</div></div>
+                <div class="review-text">
+                    <p>Lezers die het eerste deel kennen, waarderen de voortzetting van Marie's verhaal en de gedetailleerde weergave van het middeleeuwse hofleven. Lydia Rood toont haar expertise in historische research en weet de complexe machtsspellen en sociale verhoudingen van die tijd overtuigend neer te zetten. De emotionele worsteling van Marie - gevangen tussen plicht en verlangen - wordt als invoelbaar beschreven.</p>
+                    <p>Het grootste bezwaar is dat dit een vervolg is: nieuwe lezers missen context en verbinding met de personages. De uitgebreide historische details, hoewel accuraat, kunnen het verhaal soms vertragen. Met een 3.50 op Goodreads (nog weinig beoordelingen) is de ontvangst gematigd, vooral onder lezers die het eerste deel niet kennen.</p>
+                </div>
+                <div class="advice">💡 Aanbevolen voor lezers die het eerste deel hebben gelezen en van gedetailleerde middeleeuwse historische romans houden, minder geschikt als instappunt in de serie.</div>
+            </div>
             <button class="select-btn" data-id="de-pleegzoon" onclick="toggle(this)">📖 Selecteer dit boek</button>
         </div>
-    
+
         <div class="book-card">
-            <div class="book-content">
-                <img src="covers/verborgen-in-het-verleden.jpg" alt="De Are moorden 3 - Verborgen in het verleden" class="book-cover">
+            <div class="book-header">
+                <img src="covers/verborgen-in-het-verleden.jpg" alt="Verborgen in het verleden" class="book-cover">
                 <div class="book-info">
-                    <div class="book-title">De Are moorden 3 - Verborgen in het verleden</div>
+                    <div class="book-title">Verborgen in het verleden</div>
                     <div class="book-author">Viveca Sten</div>
                     <div class="rating">
                         <span class="stars">★★★½☆</span>
                         <span class="rating-num">3.85</span>
-                        <span style="color:#888">(48 beoordelingen)</span>
+                        <span class="rating-count">(48 beoordelingen)</span>
                     </div>
-                    <span class="genre-tag">Thriller</span>
-                    <span class="series-tag">De Åre moorden #3</span>
+                    <div class="tags">
+                        <span class="genre-tag">Thriller</span>
+                        <span class="series-tag">De Åre moorden #3</span>
+                    </div>
                     <p class="summary">Vlak voor Pasen wordt een lichaam gevonden in het Zweedse skigebied Åre. Een pakkende, indrukwekkende en spannende thriller vol onverwachte wendingen.</p>
                 </div>
             </div>
-            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Viveca Sten levert weer een pageturner af"</p><p class="review-snippet">"Spannend van begin tot eind"</p><p class="review-snippet">"De perfecte Scandinavische thriller voor de winternachten"</p></div>
+            <div class="review-section">
+                <div class="review-title">💬 Wat lezers zeggen:</div>
+                <div class="quotes-grid"><div class="quote positive">"Viveca Sten levert weer een pageturner af."</div><div class="quote positive">"De sfeer van het Zweedse skigebied is perfect getroffen."</div><div class="quote negative">"Niet haar sterkste werk vergeleken met de Sandhamn-serie."</div><div class="quote negative">"Het plot volgt bekende Scandinavische thriller-patronen."</div></div>
+                <div class="review-text">
+                    <p>Fans van Scandinavische thrillers waarderen de atmosferische setting in het winterse Åre en de gelaagde plot met meerdere verdachten. Sten weet de koude, geïsoleerde sfeer van het skigebied effectief te gebruiken om spanning op te bouwen. De rechercheurs zijn inmiddels vertrouwd en hun persoonlijke verhaallijnen voegen diepte toe. Het tempo ligt hoog en de onverwachte wendingen houden je bij de les.</p>
+                    <p>Critici vergelijken dit boek onvermijdelijk met Stens populairdere Sandhamn-reeks en vinden deze serie minder sterk. Het plot volgt bekende Nordic noir-conventies, wat voor ervaren genrelezers voorspelbaar kan aanvoelen. De score van 3.85 weerspiegelt een competente maar niet uitspringende thriller.</p>
+                </div>
+                <div class="advice">💡 Ideaal voor fans van Scandinavische thrillers die genieten van winterse settings en gelaagde mysteries, minder onderscheidend voor wie al verzadigd is van het genre.</div>
+            </div>
             <button class="select-btn" data-id="verborgen-in-het-verleden" onclick="toggle(this)">📖 Selecteer dit boek</button>
         </div>
-    
+
         <div class="book-card">
-            <div class="book-content">
-                <img src="covers/buitenspel-in-parijs.jpg" alt="Voetbalvrouwen 1 - Buitenspel in Parijs" class="book-cover">
+            <div class="book-header">
+                <img src="covers/buitenspel-in-parijs.jpg" alt="Buitenspel in Parijs" class="book-cover">
                 <div class="book-info">
-                    <div class="book-title">Voetbalvrouwen 1 - Buitenspel in Parijs</div>
+                    <div class="book-title">Buitenspel in Parijs</div>
                     <div class="book-author">Nina van Buuren</div>
                     <div class="rating">
                         <span class="stars">★★★★☆</span>
                         <span class="rating-num">4.00</span>
-                        <span style="color:#888">(12 beoordelingen)</span>
+                        <span class="rating-count">(12 beoordelingen)</span>
                     </div>
-                    <span class="genre-tag">Feelgood</span>
-                    <span class="series-tag">Voetbalvrouwen #1</span>
-                    <p class="summary">Wanneer Bobbi als een blok voor de succesvolle keeper Finn valt, beseft ze nog niet dat liefde en voetbal niet altijd goed samengaan. Een spannende sports romance in het hart van Parijs.</p>
+                    <div class="tags">
+                        <span class="genre-tag">Feelgood</span>
+                        <span class="series-tag">Voetbalvrouwen #1</span>
+                    </div>
+                    <p class="summary">Wanneer Bobbi als een blok voor de succesvolle keeper Finn valt, beseft ze nog niet dat liefde en voetbal niet altijd goed samengaan. Een spannende sports romance in Parijs.</p>
                 </div>
             </div>
-            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Een heerlijke feelgood met een sportieve twist"</p><p class="review-snippet">"Romantiek en voetbal: de perfecte combinatie"</p><p class="review-snippet">"Nina van Buuren debuteert met een smakelijke pageturner"</p></div>
+            <div class="review-section">
+                <div class="review-title">💬 Wat lezers zeggen:</div>
+                <div class="quotes-grid"><div class="quote positive">"Een heerlijke feelgood met een sportieve twist."</div><div class="quote positive">"Romantiek en voetbal: de perfecte combinatie voor een guilty pleasure."</div><div class="quote negative">"Het verhaal is vrij voorspelbaar voor het genre."</div><div class="quote negative">"De voetbalwereld blijft wat oppervlakkig beschreven."</div></div>
+                <div class="review-text">
+                    <p>Lezers die houden van luchtige romantiek met een sportieve insteek zijn enthousiast over dit debuut. De combinatie van de glamoureuze Parijse setting, de spanning van het profvoetbal en een liefdesgeschiedenis met obstakels werkt goed. Nina van Buuren schrijft vlot en de chemie tussen Bobbi en Finn is voelbaar. Als eerste deel van een serie introduceert het de wereld van voetbalvrouwen op toegankelijke wijze.</p>
+                    <p>Critici wijzen op de voorspelbaarheid - het volgt het bekende patroon van het sports romance genre zonder veel verrassingen. De voetbalwereld blijft wat oppervlakkig beschreven, waardoor kenners zich kunnen storen aan gebrek aan authenticiteit. De 4.00 op Goodreads (weinig reviews) suggereert een niche-publiek dat krijgt wat het verwacht.</p>
+                </div>
+                <div class="advice">💡 Perfect voor lezers die houden van feelgood-romance met een sportieve setting en niet op zoek zijn naar literaire diepgang, minder voor wie verrassende plots of realistische sportbeschrijvingen verwacht.</div>
+            </div>
             <button class="select-btn" data-id="buitenspel-in-parijs" onclick="toggle(this)">📖 Selecteer dit boek</button>
         </div>
-    
+
         <div class="book-card">
-            <div class="book-content">
+            <div class="book-header">
                 <img src="covers/minnesota.jpg" alt="Minnesota" class="book-cover">
                 <div class="book-info">
                     <div class="book-title">Minnesota</div>
@@ -178,19 +242,29 @@
                     <div class="rating">
                         <span class="stars">★★★½☆</span>
                         <span class="rating-num">3.97</span>
-                        <span style="color:#888">(3.203 beoordelingen)</span>
+                        <span class="rating-count">(3203 beoordelingen)</span>
                     </div>
-                    <span class="genre-tag">Thriller</span>
-                    <span class="series-tag">✓ Standalone</span>
-                    <p class="summary">Bob Oz geeft nooit op. Zelfs niet wanneer hij is geschorst voor geweld in dienst. Een hardgekookte politieroman in beste Nesbø-stijl, gesitueerd in het Amerika van 2016.</p>
+                    <div class="tags">
+                        <span class="genre-tag">Thriller</span>
+                        <span class="series-tag">✓ Standalone</span>
+                    </div>
+                    <p class="summary">Detective Bob Oz geeft nooit op, zelfs niet wanneer hij is geschorst voor geweld in dienst. Een hardgekookte politieroman in beste Nesbø-stijl, gesitueerd in het Amerika van 2016.</p>
                 </div>
             </div>
-            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Nesbø op zijn duisterst en best"</p><p class="review-snippet">"Een meesterlijke thriller over een politieman die niet kan stoppen"</p><p class="review-snippet">"Amerika door Noorse ogen: bloedstollend en onvergetelijk"</p></div>
+            <div class="review-section">
+                <div class="review-title">💬 Wat lezers zeggen:</div>
+                <div class="quotes-grid"><div class="quote positive">"Een psychologisch beladen verhaal met gerafelde personages."</div><div class="quote positive">"Nesbø levert weer een wervelende ontknoping."</div><div class="quote negative">"Niet echt Harry Hole, maar toch nervepirrend genoeg."</div><div class="quote negative">"Het boek komt wat traag op gang met drie perspectieven."</div></div>
+                <div class="review-text">
+                    <p>Nesbø-fans waarderen de duistere sfeer en de complexe hoofdpersoon Bob Oz - een politieman met demonen die de grens tussen goed en kwaad doet vervagen. De setting in Minneapolis 2016 geeft commentaar op wapenbezit en eenzaamheid in Amerika, thema's die actueel en beladen zijn. De plotwendingen zijn klassiek Nesbø: onverwacht en impactvol. De psychologische diepgang en de parallellen tussen jager en prooi maken dit tot een rijke leeservaring voor wie bereid is te investeren.</p>
+                    <p>Het grootste kritiekpunt is de vergelijking met Harry Hole - vaste lezers missen hun favoriete detective. De drie perspectieven maken het begin wat rommelig en het tempo heeft tijd nodig. Ook ontbreekt de Noorse setting die Nesbø's werk zo kenmerkend maakt. Met 3.97 uit 3200+ ratings scoort dit degelijk maar niet uitblinkend voor Nesbø-begrippen.</p>
+                </div>
+                <div class="advice">💡 Aanbevolen voor Nesbø-fans die openstaan voor iets anders dan Harry Hole en voor liefhebbers van duistere, psychologische thrillers met maatschappijkritiek, minder voor wie luchtig leesvoer zoekt.</div>
+            </div>
             <button class="select-btn" data-id="minnesota" onclick="toggle(this)">📖 Selecteer dit boek</button>
         </div>
-    
+
         <div class="book-card">
-            <div class="book-content">
+            <div class="book-header">
                 <img src="covers/vleugelslag.jpg" alt="Vleugelslag" class="book-cover">
                 <div class="book-info">
                     <div class="book-title">Vleugelslag</div>
@@ -198,43 +272,61 @@
                     <div class="rating">
                         <span class="stars">★★★★☆</span>
                         <span class="rating-num">4.00</span>
-                        <span style="color:#888">(10 beoordelingen)</span>
+                        <span class="rating-count">(10 beoordelingen)</span>
                     </div>
-                    <span class="genre-tag">Non-fictie</span>
-                    <span class="series-tag">✓ Standalone</span>
+                    <div class="tags">
+                        <span class="genre-tag">Non-fictie</span>
+                        <span class="series-tag">✓ Standalone</span>
+                    </div>
                     <p class="summary">Uit een afgelegen bergdorp in Oostenrijk werd na de Eerste Wereldoorlog een bijzondere vrouw geboren. Een persoonlijk verhaal over doorzettingsvermogen en dromen.</p>
                 </div>
             </div>
-            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Een ontroerend en inspirerend verhaal"</p><p class="review-snippet">"Josephine Rombouts schrijft met hart en ziel"</p><p class="review-snippet">"Een must-read voor liefhebbers van waargebeurde verhalen"</p></div>
+            <div class="review-section">
+                <div class="review-title">💬 Wat lezers zeggen:</div>
+                <div class="quotes-grid"><div class="quote positive">"Een ontroerend en inspirerend verhaal dat je bijblijft."</div><div class="quote positive">"Josephine Rombouts schrijft met hart en ziel."</div><div class="quote negative">"De structuur is soms wat fragmentarisch."</div><div class="quote negative">"Als je de persoonlijke connectie niet voelt, kan het afstandelijk worden."</div></div>
+                <div class="review-text">
+                    <p>Lezers die waargebeurde verhalen waarderen, zijn geraakt door dit intieme portret. Rombouts schrijft met empathie en oog voor detail over een bijzondere vrouw wier leven getekend werd door historische omwentelingen. De thema's - doorzettingsvermogen, dromen najagen ondanks tegenslag - resoneren universeel. De persoonlijke toon maakt het verhaal toegankelijk en emotioneel invoelbaar.</p>
+                    <p>De fragmentarische structuur wordt door sommigen als storend ervaren - het springt soms in tijd en focus. Lezers die geen persoonlijke connectie voelen met het onderwerp kunnen het verhaal afstandelijk vinden. Met slechts 10 beoordelingen op Goodreads is het moeilijk een representatief beeld te krijgen, maar de 4.00 suggereert een warm onthaal onder de kleine lezerskring.</p>
+                </div>
+                <div class="advice">💡 Geschikt voor lezers die houden van persoonlijke, waargebeurde verhalen met historische context, minder voor wie een strak gestructureerd narratief of breed gedragen klassiekers zoekt.</div>
+            </div>
             <button class="select-btn" data-id="vleugelslag" onclick="toggle(this)">📖 Selecteer dit boek</button>
         </div>
-    
+
     </div>
     <div class="submit-section">
-        <button class="submit-btn" onclick="submit()">✨ Verzenden</button>
+        <button class="submit-btn" onclick="submit()" id="submitBtn">✨ Verzenden</button>
     </div>
     <script>
-        const selected = new Set();
+        let selected = new Set();
         function toggle(btn) {
             const id = btn.dataset.id;
-            if (selected.has(id)) { 
-                selected.delete(id); 
-                btn.classList.remove('selected'); 
-                btn.textContent = '📖 Selecteer dit boek'; 
-            }
-            else { 
-                selected.add(id); 
-                btn.classList.add('selected'); 
-                btn.textContent = '✓ Geselecteerd'; 
+            if (selected.has(id)) {
+                selected.delete(id);
+                btn.classList.remove('selected');
+                btn.textContent = '📖 Selecteer dit boek';
+            } else if (selected.size < 4) {
+                selected.add(id);
+                btn.classList.add('selected');
+                btn.textContent = '✓ Geselecteerd';
             }
             document.getElementById('count').textContent = selected.size;
         }
         function submit() {
-            if (selected.size === 0) { alert('Selecteer minimaal 1 boek'); return; }
+            if (selected.size === 0) {
+                alert('Selecteer minimaal 1 boek');
+                return;
+            }
+            const data = { books: Array.from(selected), timestamp: new Date().toISOString() };
             fetch('https://webhooks.tasklet.ai/v1/public/webhook?token=51c51c4983d66c1d605b78859ecb4c8b', {
-                method: 'POST', headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({books: Array.from(selected)})
-            }).then(() => alert('Selectie verzonden! 🎉')).catch(() => alert('Fout bij verzenden'));
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(() => {
+                alert('Selectie verzonden! De ebooks worden gedownload.');
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('submitBtn').textContent = '✓ Verzonden';
+            }).catch(() => alert('Fout bij verzenden, probeer opnieuw.'));
         }
     </script>
 </body>
