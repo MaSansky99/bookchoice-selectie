@@ -3,200 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookchoice Selectie - Januari 2026</title>
+    <title>Bookchoice Selectie - Februari 2026</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: system-ui, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
         .header { text-align: center; color: white; padding: 30px 0; }
-        .header h1 { font-size: 2.5em; }
-        .counter { background: white; padding: 15px 30px; border-radius: 30px; display: inline-block; margin: 20px 0; font-size: 1.2em; }
+        .header h1 { font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .header p { opacity: 0.9; margin-top: 10px; }
+        .counter { background: white; padding: 15px 30px; border-radius: 30px; display: inline-block; margin: 20px 0; font-size: 1.2em; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
-        .book-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        .book-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); transition: transform 0.3s; }
+        .book-card:hover { transform: translateY(-5px); }
         .book-content { display: flex; padding: 20px; gap: 20px; }
-        .book-cover { width: 120px; height: 180px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+        .book-cover { width: 120px; height: 180px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .book-info { flex: 1; }
-        .book-title { font-size: 1.2em; font-weight: bold; margin-bottom: 5px; }
+        .book-title { font-size: 1.2em; font-weight: bold; margin-bottom: 5px; color: #1a1a2e; }
         .book-author { color: #666; margin-bottom: 10px; }
         .rating { margin-bottom: 10px; }
-        .stars { color: #f59e0b; }
+        .stars { color: #f59e0b; font-size: 1.1em; }
+        .rating-num { font-weight: bold; color: #333; }
         .genre-tag { background: #e0e7ff; color: #4338ca; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; margin-right: 5px; display: inline-block; margin-bottom: 5px; }
-        .series-tag { background: #fef3c7; color: #92400e; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; display: inline-block; margin-bottom: 5px; }
+        .series-tag { background: #fef3c7; color: #92400e; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; display: inline-block; }
         .summary { color: #555; font-size: 0.95em; line-height: 1.5; margin: 15px 0; border-left: 3px solid #667eea; padding-left: 12px; }
         .reviews { background: #f8fafc; padding: 15px; margin: 0 20px 20px; border-radius: 8px; }
-        .review-snippet { font-style: italic; color: #555; margin: 8px 0; padding-left: 10px; border-left: 2px solid #cbd5e1; font-size: 0.9em; }
-        .select-btn { width: 100%; padding: 15px; border: none; background: #10b981; color: white; font-size: 1.1em; cursor: pointer; transition: background 0.3s; }
-        .select-btn:hover { background: #059669; }
-        .select-btn.selected { background: #667eea; }
+        .reviews strong { color: #475569; font-size: 0.9em; }
+        .review-snippet { font-style: italic; color: #64748b; margin: 8px 0; padding-left: 10px; border-left: 2px solid #cbd5e1; font-size: 0.9em; }
+        .select-btn { width: 100%; padding: 15px; border: none; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; font-size: 1.1em; cursor: pointer; transition: all 0.3s; font-weight: 600; }
+        .select-btn:hover { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
+        .select-btn.selected { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .submit-section { text-align: center; margin: 30px 0; }
-        .submit-btn { background: white; color: #667eea; padding: 20px 60px; font-size: 1.3em; border: none; border-radius: 30px; cursor: pointer; }
+        .submit-btn { background: white; color: #667eea; padding: 20px 60px; font-size: 1.3em; border: none; border-radius: 30px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.3s; }
         .submit-btn:hover { transform: scale(1.05); }
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+            .book-content { flex-direction: column; align-items: center; text-align: center; }
+            .summary { border-left: none; padding-left: 0; border-top: 3px solid #667eea; padding-top: 12px; }
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>📚 Bookchoice Selectie - Januari 2026</h1>
+        <h1>📚 Bookchoice Selectie</h1>
+        <p>Februari 2026 - Kies jouw favoriete boeken!</p>
         <div class="counter"><span id="count">0</span> boeken geselecteerd</div>
     </div>
     <div class="container">
 
         <div class="book-card">
             <div class="book-content">
-                <img src="covers/moederheil.jpg" alt="Moederheil" class="book-cover">
+                <img src="covers/de-roep-van-een-ver-eiland.jpg" alt="De roep van een ver eiland" class="book-cover">
                 <div class="book-info">
-                    <div class="book-title">Moederheil</div>
-                    <div class="book-author">Els Florijn</div>
+                    <div class="book-title">De roep van een ver eiland</div>
+                    <div class="book-author">Sarah Lark</div>
                     <div class="rating">
                         <span class="stars">★★★★☆</span>
-                        <strong>4.17</strong>
-                        <span style="color:#888">(129 ratings)</span>
+                        <span class="rating-num">4.11</span>
+                        <span style="color:#888">(28 beoordelingen)</span>
                     </div>
-                    <span class="genre-tag">Roman</span>
+                    <span class="genre-tag">Historische roman</span>
                     <span class="series-tag">✓ Standalone</span>
-                    <p class="summary">Een indrukwekkend en ontroerend verhaal van bestseller-auteur Els Florijn over moederschap, familie en de keuzes die generaties vormgeven. Een warme roman over liefde en vergeving.</p>
+                    <p class="summary">Liverpool, 1854. De jonge lerares Eve krijgt een buitengewone baan aangeboden als gouvernante voor de blinde dochter van de Sultan van Oman en Zanzibar. In een paleis aan zee ontdekt ze een compleet nieuwe wereld.</p>
                 </div>
             </div>
-            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"Prachtig geschreven met veel emotie"</p><p class="review-snippet">"Els Florijn weet als geen ander familieverhalen te vertellen"</p><p class="review-snippet">"Een ontroerend verhaal over moederliefde"</p></div>
-            <button class="select-btn" data-id="moederheil" onclick="toggle(this)">Selecteer</button>
+            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Een meeslepend verhaal over avontuur en liefde in een exotische setting"</p><p class="review-snippet">"Sarah Lark op haar best - historische details met romantiek verweven"</p><p class="review-snippet">"Een prachtige standalone roman die je meeneemt naar het Midden-Oosten"</p></div>
+            <button class="select-btn" data-id="de-roep-van-een-ver-eiland" onclick="toggle(this)">📖 Selecteer dit boek</button>
         </div>
     
         <div class="book-card">
             <div class="book-content">
-                <img src="covers/het-kuuroord.jpg" alt="Het kuuroord" class="book-cover">
+                <img src="covers/de-sterkste-zus.jpg" alt="De sterkste zus" class="book-cover">
                 <div class="book-info">
-                    <div class="book-title">Het kuuroord</div>
-                    <div class="book-author">Ruth Kelly</div>
+                    <div class="book-title">De sterkste zus</div>
+                    <div class="book-author">Angelique Haak</div>
                     <div class="rating">
-                        <span class="stars">★★★☆☆</span>
-                        <strong>3.68</strong>
-                        <span style="color:#888">(17.500+ ratings)</span>
+                        <span class="stars">★★★★☆</span>
+                        <span class="rating-num">4.42</span>
+                        <span style="color:#888">(103 beoordelingen)</span>
                     </div>
                     <span class="genre-tag">Thriller</span>
                     <span class="series-tag">✓ Standalone</span>
-                    <p class="summary">Een luxe kuuroord in de Alpen wordt het toneel van een nachtmerrie wanneer een sneeuwstorm de gasten opsluit. Eén voor één verdwijnen er mensen. Wie kan je nog vertrouwen?</p>
+                    <p class="summary">Na een jeugd vol geweld en intimidatie verbreekt Claire alle banden met haar familie. Maar het verleden laat zich niet zomaar achter...</p>
                 </div>
             </div>
-            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"A creepy and immersive setting perfect for a locked-room thriller"</p><p class="review-snippet">"A sinister version of White Lotus"</p><p class="review-snippet">"Unputdownable with plenty of twists"</p></div>
-            <button class="select-btn" data-id="het-kuuroord" onclick="toggle(this)">Selecteer</button>
+            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Een bloedstollende thriller die je tot de laatste pagina in zijn greep houdt"</p><p class="review-snippet">"Angelique Haak bewijst wederom een meester van het spanning opbouwen te zijn"</p><p class="review-snippet">"Donker, intens en onvergetelijk"</p></div>
+            <button class="select-btn" data-id="de-sterkste-zus" onclick="toggle(this)">📖 Selecteer dit boek</button>
         </div>
     
         <div class="book-card">
             <div class="book-content">
-                <img src="covers/as-in-de-sneeuw.jpg" alt="Hugo Fischer 1 - As in de sneeuw" class="book-cover">
+                <img src="covers/het-wonder-van-het-noorden.jpg" alt="Het wonder van het noorden" class="book-cover">
                 <div class="book-info">
-                    <div class="book-title">Hugo Fischer 1 - As in de sneeuw</div>
-                    <div class="book-author">Oriana Ramunno</div>
+                    <div class="book-title">Het wonder van het noorden</div>
+                    <div class="book-author">Annemarie Ros</div>
                     <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <strong>4.12</strong>
-                        <span style="color:#888">(1.805 ratings)</span>
+                        <span class="stars">★★★½☆</span>
+                        <span class="rating-num">3.91</span>
+                        <span style="color:#888">(32 beoordelingen)</span>
                     </div>
-                    <span class="genre-tag">Historische thriller</span>
-                    <span class="series-tag">Hugo Fischer 1</span>
-                    <p class="summary">Auschwitz, 1943. Wanneer het lichaam van een SS-officier wordt gevonden, wordt detective Hugo Fischer ingeschakeld. Maar Hugo verbergt een geheim dat hem het leven kan kosten.</p>
-                </div>
-            </div>
-            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"A dark but compelling work of historical fiction"</p><p class="review-snippet">"Loved this genre mixing novel that blended WW2 historical fiction with a classic whodunit mystery"</p><p class="review-snippet">"Compelling and confronting read with a crime suspense element"</p></div>
-            <button class="select-btn" data-id="as-in-de-sneeuw" onclick="toggle(this)">Selecteer</button>
-        </div>
-    
-        <div class="book-card">
-            <div class="book-content">
-                <img src="covers/de-geluksbrenger.jpg" alt="De geluksbrenger" class="book-cover">
-                <div class="book-info">
-                    <div class="book-title">De geluksbrenger</div>
-                    <div class="book-author">Pierre Jarawan</div>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <strong>4.10</strong>
-                        <span style="color:#888">(2.900+ ratings)</span>
-                    </div>
-                    <span class="genre-tag">Roman</span>
+                    <span class="genre-tag">Historische roman</span>
                     <span class="series-tag">✓ Standalone</span>
-                    <p class="summary">Een meeslepend verhaal over Samir die op zoek gaat naar zijn verdwenen vader en daarbij zichzelf ontdekt. Een ontroerende roman over identiteit, familie en de kracht van verhalen.</p>
+                    <p class="summary">Een historische roman die zich afspeelt in het hoge noorden. Een verhaal over doorzettingsvermogen, liefde en de kracht van dromen in barre tijden.</p>
                 </div>
             </div>
-            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"A beautiful and captivating story about family and identity"</p><p class="review-snippet">"Pierre Jarawan writes with warmth and depth"</p><p class="review-snippet">"A wonderful tale of searching for belonging"</p></div>
-            <button class="select-btn" data-id="de-geluksbrenger" onclick="toggle(this)">Selecteer</button>
+            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Prachtig beschreven landschappen en personages"</p><p class="review-snippet">"Een sfeervolle historische roman"</p><p class="review-snippet">"Annemarie Ros weet het verleden tot leven te brengen"</p></div>
+            <button class="select-btn" data-id="het-wonder-van-het-noorden" onclick="toggle(this)">📖 Selecteer dit boek</button>
         </div>
     
         <div class="book-card">
             <div class="book-content">
-                <img src="covers/rustimo.jpg" alt="Rustimo" class="book-cover">
+                <img src="covers/de-pleegzoon.jpg" alt="De pleegzoon" class="book-cover">
                 <div class="book-info">
-                    <div class="book-title">Rustimo</div>
-                    <div class="book-author">Lucas Zandberg</div>
+                    <div class="book-title">De pleegzoon</div>
+                    <div class="book-author">Lydia Rood</div>
+                    <div class="rating">
+                        <span class="stars">★★★½☆</span>
+                        <span class="rating-num">3.50</span>
+                        <span style="color:#888">(15 beoordelingen)</span>
+                    </div>
+                    <span class="genre-tag">Historische roman</span>
+                    <span class="series-tag">Marie d'Harcourt #2</span>
+                    <p class="summary">1415. Marie d'Harcourt beseft dat haar rol is uitgespeeld nu ze haar man Reinald, hertog van Gelre, geen kinderen heeft geschonken. Een middeleeuwse roman over macht, liefde en opoffering.</p>
+                </div>
+            </div>
+            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Een waardige opvolger van De Maagd van Rosendael"</p><p class="review-snippet">"Lydia Rood schept een levendig beeld van de middeleeuwen"</p><p class="review-snippet">"Historische roman met diepgang en emotie"</p></div>
+            <button class="select-btn" data-id="de-pleegzoon" onclick="toggle(this)">📖 Selecteer dit boek</button>
+        </div>
+    
+        <div class="book-card">
+            <div class="book-content">
+                <img src="covers/verborgen-in-het-verleden.jpg" alt="De Are moorden 3 - Verborgen in het verleden" class="book-cover">
+                <div class="book-info">
+                    <div class="book-title">De Are moorden 3 - Verborgen in het verleden</div>
+                    <div class="book-author">Viveca Sten</div>
+                    <div class="rating">
+                        <span class="stars">★★★½☆</span>
+                        <span class="rating-num">3.85</span>
+                        <span style="color:#888">(48 beoordelingen)</span>
+                    </div>
+                    <span class="genre-tag">Thriller</span>
+                    <span class="series-tag">De Åre moorden #3</span>
+                    <p class="summary">Vlak voor Pasen wordt een lichaam gevonden in het Zweedse skigebied Åre. Een pakkende, indrukwekkende en spannende thriller vol onverwachte wendingen.</p>
+                </div>
+            </div>
+            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Viveca Sten levert weer een pageturner af"</p><p class="review-snippet">"Spannend van begin tot eind"</p><p class="review-snippet">"De perfecte Scandinavische thriller voor de winternachten"</p></div>
+            <button class="select-btn" data-id="verborgen-in-het-verleden" onclick="toggle(this)">📖 Selecteer dit boek</button>
+        </div>
+    
+        <div class="book-card">
+            <div class="book-content">
+                <img src="covers/buitenspel-in-parijs.jpg" alt="Voetbalvrouwen 1 - Buitenspel in Parijs" class="book-cover">
+                <div class="book-info">
+                    <div class="book-title">Voetbalvrouwen 1 - Buitenspel in Parijs</div>
+                    <div class="book-author">Nina van Buuren</div>
                     <div class="rating">
                         <span class="stars">★★★★☆</span>
-                        <strong>4.05</strong>
-                        <span style="color:#888">(100+ ratings)</span>
+                        <span class="rating-num">4.00</span>
+                        <span style="color:#888">(12 beoordelingen)</span>
                     </div>
-                    <span class="genre-tag">Literaire roman</span>
-                    <span class="series-tag">✓ Standalone</span>
-                    <p class="summary">Een prachtige literaire roman van Nederlandse auteur Lucas Zandberg. Een verhaal over het zoeken naar rust, betekenis en verbinding in een hectische wereld.</p>
+                    <span class="genre-tag">Feelgood</span>
+                    <span class="series-tag">Voetbalvrouwen #1</span>
+                    <p class="summary">Wanneer Bobbi als een blok voor de succesvolle keeper Finn valt, beseft ze nog niet dat liefde en voetbal niet altijd goed samengaan. Een spannende sports romance in het hart van Parijs.</p>
                 </div>
             </div>
-            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"Mooi geschreven met veel diepgang"</p><p class="review-snippet">"Lucas Zandberg schrijft ontroerend over het moderne leven"</p><p class="review-snippet">"Een reflectieve roman die blijft hangen"</p></div>
-            <button class="select-btn" data-id="rustimo" onclick="toggle(this)">Selecteer</button>
+            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Een heerlijke feelgood met een sportieve twist"</p><p class="review-snippet">"Romantiek en voetbal: de perfecte combinatie"</p><p class="review-snippet">"Nina van Buuren debuteert met een smakelijke pageturner"</p></div>
+            <button class="select-btn" data-id="buitenspel-in-parijs" onclick="toggle(this)">📖 Selecteer dit boek</button>
         </div>
     
         <div class="book-card">
             <div class="book-content">
-                <img src="covers/mijn-naam-is-edino.jpg" alt="Mijn naam is Edino" class="book-cover">
+                <img src="covers/minnesota.jpg" alt="Minnesota" class="book-cover">
                 <div class="book-info">
-                    <div class="book-title">Mijn naam is Edino</div>
-                    <div class="book-author">Edino van Dorsten</div>
+                    <div class="book-title">Minnesota</div>
+                    <div class="book-author">Jo Nesbø</div>
+                    <div class="rating">
+                        <span class="stars">★★★½☆</span>
+                        <span class="rating-num">3.97</span>
+                        <span style="color:#888">(3.203 beoordelingen)</span>
+                    </div>
+                    <span class="genre-tag">Thriller</span>
+                    <span class="series-tag">✓ Standalone</span>
+                    <p class="summary">Bob Oz geeft nooit op. Zelfs niet wanneer hij is geschorst voor geweld in dienst. Een hardgekookte politieroman in beste Nesbø-stijl, gesitueerd in het Amerika van 2016.</p>
+                </div>
+            </div>
+            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Nesbø op zijn duisterst en best"</p><p class="review-snippet">"Een meesterlijke thriller over een politieman die niet kan stoppen"</p><p class="review-snippet">"Amerika door Noorse ogen: bloedstollend en onvergetelijk"</p></div>
+            <button class="select-btn" data-id="minnesota" onclick="toggle(this)">📖 Selecteer dit boek</button>
+        </div>
+    
+        <div class="book-card">
+            <div class="book-content">
+                <img src="covers/vleugelslag.jpg" alt="Vleugelslag" class="book-cover">
+                <div class="book-info">
+                    <div class="book-title">Vleugelslag</div>
+                    <div class="book-author">Josephine Rombouts</div>
                     <div class="rating">
                         <span class="stars">★★★★☆</span>
-                        <strong>4.22</strong>
-                        <span style="color:#888">(665 ratings)</span>
+                        <span class="rating-num">4.00</span>
+                        <span style="color:#888">(10 beoordelingen)</span>
                     </div>
-                    <span class="genre-tag">Non-fictie / Biografie</span>
+                    <span class="genre-tag">Non-fictie</span>
                     <span class="series-tag">✓ Standalone</span>
-                    <p class="summary">In 2019 werd een verborgen gezin ontdekt in Ruinerwold. Edino vertelt zijn aangrijpende verhaal over opgroeien in twee werkelijkheden, indoctrinatie en trauma.</p>
+                    <p class="summary">Uit een afgelegen bergdorp in Oostenrijk werd na de Eerste Wereldoorlog een bijzondere vrouw geboren. Een persoonlijk verhaal over doorzettingsvermogen en dromen.</p>
                 </div>
             </div>
-            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"Aangrijpend en huiveringwekkend - bewonderenswaardig dat hij dit durft te delen"</p><p class="review-snippet">"Zo'n heftig verhaal, wat een veerkracht"</p><p class="review-snippet">"Een indrukwekkend en moedig boek over een onvoorstelbare jeugd"</p></div>
-            <button class="select-btn" data-id="mijn-naam-is-edino" onclick="toggle(this)">Selecteer</button>
-        </div>
-    
-        <div class="book-card">
-            <div class="book-content">
-                <img src="covers/floras-erfenis.jpg" alt="De Lelievilla 1 - Flora's erfenis" class="book-cover">
-                <div class="book-info">
-                    <div class="book-title">De Lelievilla 1 - Flora's erfenis</div>
-                    <div class="book-author">Clarisse Sabard</div>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <strong>4.23</strong>
-                        <span style="color:#888">(329 ratings)</span>
-                    </div>
-                    <span class="genre-tag">Roman</span>
-                    <span class="series-tag">De Lelievilla 1</span>
-                    <p class="summary">Flora erft samen met haar nichtjes een huis in Normandië. Wanneer ze een mysterieuze doos ontdekt met een manuscript van haar oma, begint ze aan een zoektocht naar een verdwenen schilderij.</p>
-                </div>
-            </div>
-            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"Een heerlijke roman, een beetje in de trend van de Zeven Zussen"</p><p class="review-snippet">"Prachtige beschrijvingen die je meenemen naar Frankrijk en Griekenland"</p><p class="review-snippet">"Een warme familiesaga vol geheimen en mysterie"</p></div>
-            <button class="select-btn" data-id="floras-erfenis" onclick="toggle(this)">Selecteer</button>
-        </div>
-    
-        <div class="book-card">
-            <div class="book-content">
-                <img src="covers/slaap-zacht.jpg" alt="Slaap zacht" class="book-cover">
-                <div class="book-info">
-                    <div class="book-title">Slaap zacht</div>
-                    <div class="book-author">B.A. Paris</div>
-                    <div class="rating">
-                        <span class="stars">★★★☆☆</span>
-                        <strong>3.69</strong>
-                        <span style="color:#888">(1.821 ratings)</span>
-                    </div>
-                    <span class="genre-tag">Psychologische thriller</span>
-                    <span class="series-tag">✓ Standalone</span>
-                    <p class="summary">Nell Masters weet zeker dat iemand haar volgt. Veertien jaar geleden was ze getuige van een moord en werd ze geobsedeerd door de dader. Nu wordt de stalker gestalkt.</p>
-                </div>
-            </div>
-            <div class="reviews"><strong>Wat lezers zeggen:</strong><p class="review-snippet">"In true B.A. Paris fashion, I was kept guessing right up to the very end!"</p><p class="review-snippet">"A fast and entertaining read with great suspense"</p><p class="review-snippet">"The stalker element really kept me on my toes"</p></div>
-            <button class="select-btn" data-id="slaap-zacht" onclick="toggle(this)">Selecteer</button>
+            <div class="reviews"><strong>💬 Wat lezers zeggen:</strong><p class="review-snippet">"Een ontroerend en inspirerend verhaal"</p><p class="review-snippet">"Josephine Rombouts schrijft met hart en ziel"</p><p class="review-snippet">"Een must-read voor liefhebbers van waargebeurde verhalen"</p></div>
+            <button class="select-btn" data-id="vleugelslag" onclick="toggle(this)">📖 Selecteer dit boek</button>
         </div>
     
     </div>
@@ -207,8 +217,16 @@
         const selected = new Set();
         function toggle(btn) {
             const id = btn.dataset.id;
-            if (selected.has(id)) { selected.delete(id); btn.classList.remove('selected'); btn.textContent = 'Selecteer'; }
-            else { selected.add(id); btn.classList.add('selected'); btn.textContent = '✓ Geselecteerd'; }
+            if (selected.has(id)) { 
+                selected.delete(id); 
+                btn.classList.remove('selected'); 
+                btn.textContent = '📖 Selecteer dit boek'; 
+            }
+            else { 
+                selected.add(id); 
+                btn.classList.add('selected'); 
+                btn.textContent = '✓ Geselecteerd'; 
+            }
             document.getElementById('count').textContent = selected.size;
         }
         function submit() {
@@ -216,7 +234,7 @@
             fetch('https://webhooks.tasklet.ai/v1/public/webhook?token=51c51c4983d66c1d605b78859ecb4c8b', {
                 method: 'POST', headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({books: Array.from(selected)})
-            }).then(() => alert('Selectie verzonden!')).catch(() => alert('Fout bij verzenden'));
+            }).then(() => alert('Selectie verzonden! 🎉')).catch(() => alert('Fout bij verzenden'));
         }
     </script>
 </body>
